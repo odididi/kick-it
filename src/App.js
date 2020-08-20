@@ -45,10 +45,10 @@ function App() {
         {messages.map(msg => (
           <div key={msg.content} style={{display: 'flex', flex: 1}}>
             <div style={{fontWeight: 'bold', width: 100, marginRight: '40px'}}>
-              {msg.content.user}:
+              {msg.user}:
             </div>
             <div>
-              {msg.content.content}
+              {msg.content}
             </div>
           </div>
         ))}

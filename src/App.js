@@ -15,7 +15,8 @@ function App() {
     client.send(JSON.stringify({
       command: 2,
       channel: 'general',
-      content: message
+      content: message,
+      user: activeUsername
     }))
   }
   return (

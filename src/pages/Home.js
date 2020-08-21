@@ -83,7 +83,12 @@ const Home = ({history}) => {
     inputRef.current.focus();
   }, [inputRef]);
   return (
-    <Container>
+    <Container
+      onKeyPress={e =>
+        e.key === "Enter" &&
+        activeUsername.length > 0 &&
+        history.push('/chat')}
+    >
       <ContentContainer>
         <Logo />
         <UsernameInput

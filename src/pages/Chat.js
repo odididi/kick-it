@@ -2,6 +2,7 @@ import React from 'react';
 import '../App.css';
 import {WebSocketContext} from '../socketContext';
 import useSocket from '../useSocket';
+import {Redirect} from 'react-router';
 
 const Chat = () => {
   const {client, messages} = useSocket();
@@ -16,9 +17,15 @@ const Chat = () => {
       user: activeUsername
     }))
   }
-  return (
+  return activeUsername.length === 0 ? <Redirect to="/" /> : (
     <div className="App">
-      <div style={{width: 200, display: 'flex', margin: '140px 0'}}>
+      <div
+        style={{width: 200, display: 'flex', margin: '140px 0'}}
+        onKeyPress={e =>
+          e.key === "Enter" &&
+          message.length > 0 &&
+          onSend()}
+      >
         <input
           type="text"
           value={message}

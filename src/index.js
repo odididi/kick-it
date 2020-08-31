@@ -3,13 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {SocketProvider} from './socketContext';
+require('dotenv').config();
 
 ReactDOM.render(
   <React.StrictMode>
-    <SocketProvider>
       <App />
-    </SocketProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,62 +1,35 @@
 import React from 'react';
 import {withRouter, Redirect} from 'react-router';
 import styled from 'styled-components';
-import TextField from '@material-ui/core/TextField';
-import {WebSocketContext} from '../socketContext';
 import {Button} from '@material-ui/core';
+import Page from '../atoms/Page';
+import Input from '../atoms/Input';
 
 const Container = styled.div`
-  width: 100%;
-  height: 100vh;
-  background: #0c1113;
+  /* padding: 24px; */
+  height: 100%;
+  padding: 5%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  `;
+`;
 
 const ContentContainer = styled.div`
-  width: 80%;
-  max-width: 1024px;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 `;
 
 const Logo = styled.div`
-  height: 400px;
-  width: 600px;
-  background-image: url('assets/kickit.png');
+  height: 300px;
+  width: 100%;
+  background-image: url('/assets/kickit.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
 `
-
-const UsernameInput = styled(({...rest}) => (
-  <TextField
-    classes={{
-      root: 'root',
-    }}
-    {...rest}
-  />
-))`
-  &.root {
-    & > label {
-      color: #ffed00;
-    }
-    & > div {
-      & > fieldset {
-        border-color: #ffed00 !important;
-      }
-      & > input {
-        color: #ffed00;
-      }
-    }
-    width: 300px;
-  }
-`;
 
 const ChatButton = styled(({...rest}) => (
   <Button classes={{root: 'root', disabled: 'disabled'}} {...rest} />
@@ -76,40 +49,49 @@ const ChatButton = styled(({...rest}) => (
 `;
 
 const Home = ({history}) => {
-  const {activeUsername, setActiveUsername} = React.useContext(WebSocketContext);
+  const [username, setUsername] = React.useState('');
+  const lsUsername = localStorage.getItem('kickit_username');
   const inputRef = React.useRef();
   React.useEffect(() => {
-    if(!inputRef) return;
+    if(!inputRef || lsUsername) return;
     inputRef.current.focus();
-  }, [inputRef]);
+  }, [inputRef, lsUsername]);
+  if (lsUsername) {
+    return <Redirect to="/chat" />
+  }
   return (
-    <Container
-      onKeyPress={e =>
-        e.key === "Enter" &&
-        activeUsername.length > 0 &&
-        history.push('/chat')}
-    >
-      <ContentContainer>
-        <Logo />
-        <UsernameInput
-          inputRef={inputRef}
-          id="outlined-basic"
-          label="Username"
-          placeholder="Choose your username..."
-          variant="outlined"
-          color="primary"
-          value={activeUsername}
-          onChange={e => setActiveUsername(e.target.value)}
-        />
-        <ChatButton
-          color="secondary"
-          disabled={activeUsername.length === 0}
-          onClick={() => history.push('/chat')}
-        >
-          Start chatting!
-        </ChatButton>
-      </ContentContainer>
+    <Page>
+      <Container>
+        <ContentContainer>
+          <Logo />
+          <Input
+            inputRef={inputRef}
+            id="outlined-basic"
+            label="Username"
+            placeholder="Choose your username..."
+            variant="outlined"
+            color="primary"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            inputProps={{
+              form: {
+                autocomplete: 'off',
+              },
+            }}
+          />
+          <ChatButton
+            color="secondary"
+            disabled={username.length === 0}
+            onClick={() => {
+              localStorage.setItem('kickit_username', username)
+              history.push('/chat')
+            }}
+          >
+            Start chatting!
+          </ChatButton>
+        </ContentContainer>
       </Container>
+    </Page>
   );
 };
 

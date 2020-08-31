@@ -7,13 +7,17 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
+import {SocketContextProvider} from "./services/socket";
 
 const Router = () => {
   return (
     <BrowserRouter>
         <Switch>
           <Route path="/" exact component={Home}/>
-          <Route path="/chat" exact component={Chat}/>
+          <SocketContextProvider>
+            <Route path="/chat" exact component={Chat}/>
+            {/* <Route path="/chat/:channel" exact component={Chat}/> */}
+          </SocketContextProvider>
           <Redirect to="/" />
         </Switch>
     </BrowserRouter>

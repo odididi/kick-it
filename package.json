@@ -15,7 +15,9 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-use-websocket": "^2.1.1",
     "styled-components": "^5.1.1",
+    "use-socketio": "^2.0.3",
     "websocket": "^1.0.31"
   },
   "scripts": {

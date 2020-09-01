@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import {Button} from '@material-ui/core';
 import Page from '../atoms/Page';
 import Input from '../atoms/Input';
+import {AuthContext} from '../services/auth';
 
 const Container = styled.div`
   /* padding: 24px; */
@@ -49,14 +50,14 @@ const ChatButton = styled(({...rest}) => (
 `;
 
 const Home = ({history}) => {
-  const [username, setUsername] = React.useState('');
-  const lsUsername = localStorage.getItem('kickit_username');
+  const [_username, _setUsername] = React.useState('');
+  const {username, setUsername} = React.useContext(AuthContext);
   const inputRef = React.useRef();
   React.useEffect(() => {
-    if(!inputRef || lsUsername) return;
+    if(!inputRef || username) return;
     inputRef.current.focus();
-  }, [inputRef, lsUsername]);
-  if (lsUsername) {
+  }, [inputRef, username]);
+  if (username) {
     return <Redirect to="/chat" />
   }
   return (
@@ -71,8 +72,8 @@ const Home = ({history}) => {
             placeholder="Choose your username..."
             variant="outlined"
             color="primary"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
+            value={_username}
+            onChange={e => _setUsername(e.target.value)}
             inputProps={{
               form: {
                 autocomplete: 'off',
@@ -81,9 +82,10 @@ const Home = ({history}) => {
           />
           <ChatButton
             color="secondary"
-            disabled={username.length === 0}
+            disabled={_username.length === 0}
             onClick={() => {
-              localStorage.setItem('kickit_username', username)
+              setUsername(_username);
+              localStorage.setItem('kickit_username', _username)
               history.push('/chat')
             }}
           >

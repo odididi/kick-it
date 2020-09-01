@@ -10,7 +10,10 @@ export const SocketContextProvider = ({children}) => {
     fetchUserChannels,
     activeUsername,
     messages,
-    dispatch
+    dispatch,
+    socketMessageHistory,
+    sendMessage,
+    lastMessage
   } = useSocket();
 
   return (
@@ -22,6 +25,9 @@ export const SocketContextProvider = ({children}) => {
         activeUsername,
         messages,
         dispatch,
+        socketMessageHistory,
+        sendMessage,
+        lastMessage
       }}
     >
       {children}

@@ -109,9 +109,6 @@ const Chat = ({history}) => {
     .then(fetchUserChannels)
     .catch(console.error)
   }
-  if (!activeUsername) {
-    return <Redirect to='/' />
-  }
   return (
     <Page style={{position: 'relative'}}>
       <Sidebar>

@@ -66,7 +66,6 @@ const Sender = styled(({...rest}) => (
 
 const ChatBox = ({messages = []}) => {
   const chatBoxRef = React.useRef();
-  // console.log(messages);
   const groupedMessages = messages.reduce((acc, value) => {
     // compare the current value with the last item in the collected array
     if (acc.length && acc[acc.length - 1][0].user === value.user) {
@@ -108,7 +107,7 @@ const ChatBox = ({messages = []}) => {
 };
 
 const TypeBox = ({channel, onSend}) => {
-  const {client, activeUsername} = React.useContext(SocketContext);
+  const {activeUsername, sendMessage} = React.useContext(SocketContext);
   const [message, setMessage] = React.useState('');
   const send = () => {
     const msg = {
@@ -117,10 +116,8 @@ const TypeBox = ({channel, onSend}) => {
       content: message,
       user: activeUsername
     }
-    // console.log(msg);
-    // console.log(client.readyState);
     setMessage('');
-    client.send(JSON.stringify(msg))
+    sendMessage(JSON.stringify(msg))
   }
   return (
     <TypeBoxContainer>
@@ -145,20 +142,20 @@ const TypeBox = ({channel, onSend}) => {
 };
 
 const Channel = ({name, onBack}) => {
-  const {messages = [], dispatch} = React.useContext(SocketContext);
+  const {lastMessage} = React.useContext(SocketContext);
+  const [messages, setMessages] = React.useState([]);
   React.useEffect(() => {
-    if (!name) {
-      return;
-    }
+    if (!name) return;
     getChannelOldMessages({channelName: name})
-      .then(res => dispatch({
-        type: 'addMessages',
-        payload: {
-          channel: name,
-          messages: res.data
-        }
-      }))
-  }, [dispatch, name])
+      .then(res => setMessages(res.data))
+  }, [name])
+  React.useEffect(() => {
+    if (!lastMessage || JSON.parse(lastMessage.data).channel !== 'name') return;
+    setMessages(msgs => [
+      ...msgs,
+      JSON.parse(lastMessage.data)
+    ])
+  }, [lastMessage])
   return (
     <ChannelContainer hasSelected={Boolean(name)}>
       <HeaderContainer style={{height: 48}}>
@@ -178,7 +175,7 @@ const Channel = ({name, onBack}) => {
             # {name}
           </Typography>
         </HeaderContainer>
-        <ChatBox messages={messages[name]} />
+        <ChatBox messages={messages.filter(msg => msg.channel === name)} />
         <TypeBox
           channel={name}
         />

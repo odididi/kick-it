@@ -60,7 +60,7 @@ const ChannelList = ({onChannelSelect}) => {
   const resizeTrigger = useResize();
   React.useEffect(() =>
     setSideBarTitle(window.innerWidth > 1024 ? 'Kick it!!' : 'Channels')
-    , [resizeTrigger])
+  , [resizeTrigger])
   const handleCheckClick = async () => {
     if (newChannelName === '') {
       setShowError(true);

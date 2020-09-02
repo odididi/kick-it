@@ -1,0 +1,22 @@
+{
+  "root": true,
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "react"],
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/indent": ["error", 2],
+    "react/jsx-uses-vars": "error",
+    "react/jsx-uses-react": "error",
+    "object-curly-spacing": ["error", "never"]
+  }
+}

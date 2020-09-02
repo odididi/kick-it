@@ -80,7 +80,7 @@ const Channel = ({name, onBack}) => {
   }, [lastMessage, name])
   React.useEffect(() =>
     setWindowWidth(window.innerWidth)
-    , [resizeTrigger]);
+  , [resizeTrigger]);
   return (
     <ChannelContainer hasSelected={Boolean(name)} windowWidth={windowWidth}>
       <HeaderContainer style={{height: 52}}>

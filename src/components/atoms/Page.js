@@ -14,7 +14,7 @@ const Page = ({children}) => {
   const resizeTrigger = useResize();
   React.useEffect(() =>
     setWindowHeight(window.innerHeight)
-    , [resizeTrigger]);
+  , [resizeTrigger]);
   return (
     <Container style={{minHeight: windowHeight}}>
       {children}

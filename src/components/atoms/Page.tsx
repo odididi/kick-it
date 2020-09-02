@@ -9,7 +9,7 @@ const Container = styled.div`
   position: relative;
 `;
 
-const Page = ({children}) => {
+const Page: React.FC = ({children}) => {
   const [windowHeight, setWindowHeight] = React.useState(window.innerHeight);
   const resizeTrigger = useResize();
   React.useEffect(() =>

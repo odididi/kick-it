@@ -10,9 +10,13 @@ const AddChannelContainer = styled.div`
   transition: height 0.2s ease;
 `;
 
+interface OverlayProps {
+  expanded: boolean;
+}
+
 const Overlay = styled.div`
   width: 100%;
-  background: ${p => p.expanded ? palette.black : 'transparent'};
+  background: ${(p: OverlayProps) => p.expanded ? palette.black : 'transparent'};
   transition-property: transform;
   transition-duration: 0.2s;
   transition-timing-function: ease;
@@ -20,11 +24,20 @@ const Overlay = styled.div`
   top: 0;
   left: 0;
   height: 190;
-  transform: scaleY(${p => p.expanded ? 0 : 1});
+  transform: scaleY(${(p: OverlayProps) => p.expanded ? 0 : 1});
   transform-origin: bottom;
 `;
 
-const AddChannel = ({
+interface AddChannelProps {
+  expanded: boolean;
+  channelName: string;
+  onChannelNameUpdate: React.Dispatch<React.SetStateAction<string>>;
+  channelDescription: string;
+  onChannelDescriptionUpdate: React.Dispatch<React.SetStateAction<string>>;
+  error: boolean;
+}
+
+const AddChannel: React.FC<AddChannelProps> = ({
   expanded,
   channelName,
   onChannelNameUpdate,
@@ -32,7 +45,7 @@ const AddChannel = ({
   onChannelDescriptionUpdate,
   error
 }) => {
-  const inputRef = React.useRef();
+  const inputRef = React.useRef(document.createElement('input'));
   React.useEffect(() => {
     if (!inputRef || !expanded) return;
     inputRef.current.focus();
@@ -49,7 +62,7 @@ const AddChannel = ({
             placeholder="Enter channel name..."
             error={error && channelName === ''}
             value={channelName}
-            onChange={e => onChannelNameUpdate(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChannelNameUpdate(e.target.value)}
             style={{margin: '16px 0 0'}}
           />
           <MultilineInput
@@ -57,7 +70,7 @@ const AddChannel = ({
             placeholder="Enter channel description..."
             rows={3}
             value={channelDescription}
-            onChange={e => onChannelDescriptionUpdate(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChannelDescriptionUpdate(e.target.value)}
             style={{margin: '16px 0 8px'}}
           />
         </div>

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import TextField from "@material-ui/core/TextField";
+import TextField, {TextFieldProps} from "@material-ui/core/TextField";
 
-export const Input = styled(({...rest}) => (
+export const Input = styled(({...rest}: TextFieldProps & {maxRows?: string | number}) => (
   <TextField
     classes={{
       root: "root",
@@ -32,10 +32,6 @@ export const Input = styled(({...rest}) => (
   }
 `;
 
-interface MultilineInput {
-  rows: number;
-}
-
-export const MultilineInput: React.FC<MultilineInput> = ({rows, ...rest}) => (
+export const MultilineInput: React.FC<TextFieldProps> = ({rows, ...rest}) => (
   <Input multiline rows={rows} maxRows={rows} {...rest} />
 );

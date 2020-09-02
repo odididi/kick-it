@@ -2,12 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 
-const Input = styled(({...rest}) => (
+export const Input = styled(({...rest}) => (
   <TextField
     classes={{
       root: 'root',
     }}
     error={rest.error}
+    variant="outlined"
+    color="primary"
     {...rest}
   />
 ))`
@@ -30,4 +32,4 @@ const Input = styled(({...rest}) => (
   }
 `;
 
-export default Input;
+export const MultilineInput = ({rows, ...rest}) => <Input multiline rows={rows} maxRows={rows} {...rest} />

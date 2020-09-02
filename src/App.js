@@ -1,8 +1,7 @@
 import React from 'react';
-import './App.css';
 import Router from './routes';
 import {ThemeProvider} from '@material-ui/core';
-import {theme} from './theme';
+import {theme} from './styles/theme';
 import {AuthContextProvider} from './services/auth';
 
 const App = () => {

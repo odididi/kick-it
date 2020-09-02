@@ -3,8 +3,8 @@ import {withRouter, Redirect} from 'react-router';
 import styled from 'styled-components';
 import {Button} from '@material-ui/core';
 import Page from '../atoms/Page';
-import Input from '../atoms/Input';
-import {AuthContext} from '../services/auth';
+import {Input} from '../atoms/Input';
+import {AuthContext} from '../../services/auth';
 
 const Container = styled.div`
   /* padding: 24px; */
@@ -54,7 +54,7 @@ const Home = ({history}) => {
   const {username, setUsername} = React.useContext(AuthContext);
   const inputRef = React.useRef();
   React.useEffect(() => {
-    if(!inputRef || username) return;
+    if (!inputRef || username) return;
     inputRef.current.focus();
   }, [inputRef, username]);
   if (username) {
@@ -86,7 +86,7 @@ const Home = ({history}) => {
             onClick={() => {
               setUsername(_username);
               localStorage.setItem('kickit_username', _username)
-              history.push('/chat')
+              history.push('/chat?channel=general')
             }}
           >
             Start chatting!

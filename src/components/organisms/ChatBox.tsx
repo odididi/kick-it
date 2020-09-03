@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Avatar, Typography} from '@material-ui/core';
-import {groupConsecutiveMessagesByUser} from '../../utils';
+import {groupConsecutiveByProp} from 'utils';
+import {ServerChatMessage} from 'websocket';
 
 const ChatBoxContainer = styled.div`
   display: flex;
@@ -31,11 +32,14 @@ const Sender = styled(({...rest}) => (
   }
 `;
 
-const ChatBox = ({messages = []}) => {
-  const chatBoxRef = React.useRef();
-  const groupedMessages = groupConsecutiveMessagesByUser(messages);
+interface ChatBoxProps {
+  messages: ServerChatMessage[];
+}
+
+const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
+  const chatBoxRef = React.useRef(document.createElement('div'));
+  const groupedMessages = groupConsecutiveByProp(messages, "user");
   React.useEffect(() => {
-    if (!chatBoxRef) return;
     chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
   }, [messages])
   return (

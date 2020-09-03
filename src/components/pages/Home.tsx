@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter, Redirect} from 'react-router';
+import {withRouter, Redirect, useHistory} from 'react-router';
 import styled from 'styled-components';
 import {Button} from '@material-ui/core';
 import Page from '../atoms/Page';
@@ -49,14 +49,14 @@ const ChatButton = styled(({...rest}) => (
   }
 `;
 
-const Home = ({history}) => {
+const Home: React.FC = () => {
+  const history = useHistory();
   const [_username, _setUsername] = React.useState('');
   const {username, setUsername} = React.useContext(AuthContext);
-  const inputRef = React.useRef();
+  const inputRef = React.useRef(document.createElement('input'));
   React.useEffect(() => {
-    if (!inputRef || username) return;
     inputRef.current.focus();
-  }, [inputRef, username]);
+  }, []);
   if (username) {
     return <Redirect to="/chat" />
   }

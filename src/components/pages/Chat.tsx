@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Page from '../atoms/Page';
-import {withRouter, useLocation} from 'react-router';
+import {useHistory, useLocation} from 'react-router';
 import Channel from '../organisms/Channel';
 import ChannelList from '../organisms/ChannelList';
 
@@ -10,12 +10,13 @@ const ChatContainer = styled.div`
   height: 100vh;
 `;
 
-const Chat = ({history}) => {
+const Chat: React.FC = () => {
   const location = useLocation();
-  const _selectedChannel = new URLSearchParams(location.search).get("channel");
-  const [selectedChannel, setSelectedChannel] = React.useState(_selectedChannel);
+  const history = useHistory();
+  const _selectedChannel = new URLSearchParams(location.search).get("channel") || '';
+  const [selectedChannel, setSelectedChannel] = React.useState<string>(_selectedChannel);
   return (
-    <Page style={{position: 'relative'}}>
+    <Page>
       <ChatContainer>
         <ChannelList
           onChannelSelect={setSelectedChannel}
@@ -24,7 +25,7 @@ const Chat = ({history}) => {
           name={selectedChannel}
           onBack={() => {
             history.push('/chat')
-            setSelectedChannel(null)
+            setSelectedChannel('')
           }}
         />
       </ChatContainer>
@@ -32,5 +33,5 @@ const Chat = ({history}) => {
   )
 }
 
-export default withRouter(Chat);
+export default Chat;
 

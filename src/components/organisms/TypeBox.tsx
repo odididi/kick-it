@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import {SocketContext} from '../../services/socket';
+import useUser from 'hooks/useUser';
+import useSocket from 'hooks/useSocket';
 
 const TypeBoxContainer = styled.div`
   height: 60px;
@@ -10,18 +11,23 @@ const TypeBoxContainer = styled.div`
   padding: 8px 8px 0;
 `;
 
-const TypeBox = ({channel}) => {
-  const {activeUsername, sendMessage} = React.useContext(SocketContext);
+interface TypeBoxProps {
+  channel?: string;
+}
+
+const TypeBox: React.FC<TypeBoxProps> = ({channel}) => {
+  const {sendJsonMessage} = useSocket();
+  const {username} = useUser();
   const [message, setMessage] = React.useState('');
   const send = () => {
     const msg = {
       command: 2,
       channel,
       content: message,
-      user: activeUsername
+      user: username
     }
     setMessage('');
-    sendMessage(JSON.stringify(msg))
+    sendJsonMessage(msg)
   }
   return (
     <TypeBoxContainer>

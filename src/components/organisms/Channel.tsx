@@ -3,11 +3,15 @@ import styled from 'styled-components';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Typography from '@material-ui/core/Typography';
 import {palette} from '../../styles/theme';
-import {getChannelOldMessages} from '../../services/api';
-import {SocketContext} from '../../services/socket';
 import useResize from '../../hooks/useResize';
 import TypeBox from './TypeBox';
 import ChatBox from './ChatBox';
+import useChannelMessages from 'hooks/useChannelMessages';
+
+interface ChannelContainerProps {
+  hasSelected: boolean;
+  windowWidth: number;
+}
 
 const ChannelContainer = styled.div`
   display: flex;
@@ -16,9 +20,9 @@ const ChannelContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(${p => p.hasSelected ? '0%' : '100%'});
+  transform: translate(${(p: ChannelContainerProps) => p.hasSelected ? '0%' : '100%'});
   transition: transform 0.2s linear;
-  width: ${p => p.windowWidth}px;
+  width: ${(p: ChannelContainerProps) => p.windowWidth}px;
   height: 100%;
   background: #333;
   @media(min-width: 1024px) {
@@ -61,23 +65,15 @@ const ArrowBack = styled(({...rest}) => (
   }
 `;
 
-const Channel = ({name, onBack}) => {
-  const {lastMessage} = React.useContext(SocketContext);
-  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+interface ChannelProps {
+  name: string;
+  onBack: () => void;
+}
+
+const Channel: React.FC<ChannelProps> = ({name, onBack}) => {
+  const [windowWidth, setWindowWidth] = React.useState<number>(window.innerWidth);
   const resizeTrigger = useResize();
-  const [messages, setMessages] = React.useState([]);
-  React.useEffect(() => {
-    if (!name) return;
-    getChannelOldMessages({channelName: name})
-      .then(res => setMessages(res.data))
-  }, [name])
-  React.useEffect(() => {
-    if (!lastMessage || JSON.parse(lastMessage.data).channel !== name) return;
-    setMessages(msgs => [
-      ...msgs,
-      JSON.parse(lastMessage.data)
-    ])
-  }, [lastMessage, name])
+  const messages = useChannelMessages(name);
   React.useEffect(() =>
     setWindowWidth(window.innerWidth)
   , [resizeTrigger]);

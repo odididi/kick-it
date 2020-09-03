@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import {SocketContext} from '../../services/socket';
-import useResize from '../../hooks/useResize';
-import {createChannel, subscribeToChannel} from '../../services/api';
-import {palette} from '../../styles/theme';
-import {Logo} from '../atoms/Logo';
 import {Typography} from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {useHistory} from 'react-router';
-import AddChannel from '../molecules/AddChannel';
+import useResize from 'hooks/useResize';
+import {createChannel} from 'services/api';
+import {palette} from 'styles/theme';
+import {Logo} from 'components/atoms/Logo';
+import AddChannel from 'components/molecules/AddChannel';
+import useUser from 'hooks/useUser';
 
 const ChannelListContainer = styled.div`
   display: flex;
@@ -45,12 +45,12 @@ const ChannelsContainer = styled.div`
   width: 100%;
 `;
 
-const ChannelList = ({onChannelSelect}) => {
-  const {
-    userChannels,
-    fetchUserChannels,
-    activeUsername
-  } = React.useContext(SocketContext);
+interface ChannelListProps {
+  onChannelSelect: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ChannelList: React.FC<ChannelListProps> = ({onChannelSelect}) => {
+  const {channels: userChannels, setChannels, username} = useUser();
   const history = useHistory();
   const [newChannelName, setNewChannelName] = React.useState('');
   const [newChannelDescription, setNewChannelDescription] = React.useState('');
@@ -59,9 +59,9 @@ const ChannelList = ({onChannelSelect}) => {
   const [sidebarTitle, setSideBarTitle] = React.useState('');
   const resizeTrigger = useResize();
   React.useEffect(() =>
-    setSideBarTitle(window.innerWidth > 1024 ? 'Kick it!!' : 'Channels')
-  , [resizeTrigger])
-  const handleCheckClick = async () => {
+    setSideBarTitle(window.innerWidth > 1024 ? `Kick it, ${username}!` : 'Channels')
+  , [resizeTrigger, username])
+  const handleCheckClick = () => {
     if (newChannelName === '') {
       setShowError(true);
       return;
@@ -70,16 +70,16 @@ const ChannelList = ({onChannelSelect}) => {
     setNewChannelDescription('');
     setShowError(false);
     setAddingChannel(false);
-    await createChannel({
+    
+    createChannel({
       name: newChannelName,
       description: newChannelDescription,
-      creator: activeUsername
+      creator: username
     })
-    await subscribeToChannel({
-      channelName: newChannelName,
-      user: activeUsername
-    })
-    fetchUserChannels();
+      .then(() => setChannels(_channels => [
+        ..._channels,
+        newChannelName
+      ]))
   }
   return (
     <ChannelListContainer>
@@ -136,7 +136,7 @@ const ChannelList = ({onChannelSelect}) => {
         error={showError}
       />
       <ChannelsContainer style={{top: addingChannel ? 242 : 52}}>
-        {userChannels.map(c => (
+        {(userChannels as string[]).map(c => (
           <Row key={c} onClick={() => {
             setAddingChannel(false);
             onChannelSelect(c);

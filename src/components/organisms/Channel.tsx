@@ -37,12 +37,27 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 2px 24px;
-  color: black;
+  color: black !important;
   @media(min-width: 1024px) {
     background: #333;
     border-bottom: 1px solid ${palette.yellow};
-    color: ${palette.yellow};
     box-sizing: border-box
+  }
+`;
+
+const HeaderTitle = styled(({...rest}) => (
+  <Typography
+    classes={{
+      root: 'root',
+    }}
+    {...rest}
+  />
+))`
+  &.root {
+    color: black;
+    @media(min-width: 1024px) {
+      color: ${palette.yellow};
+    }
   }
 `;
 
@@ -81,11 +96,11 @@ const Channel: React.FC = () => {
             history.push('/chat');
           }}
         />
-        <Typography
+        <HeaderTitle
           variant="h6"
         >
           # {selectedChannel}
-        </Typography>
+        </HeaderTitle>
       </HeaderContainer>
       <ChatBox messages={channelMessages} />
       <TypeBox channel={selectedChannel}/>

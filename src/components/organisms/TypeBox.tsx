@@ -1,13 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import {useUser, useSocket} from 'hooks';
+import {Input} from 'components/atoms';
+import SendIcon from '@material-ui/icons/Send';
+import {palette} from 'styles/theme';
 
 const TypeBoxContainer = styled.div`
   height: 60px;
   background: #333;
   margin-top: auto;
   border-top: 1px solid yellow;
-  padding: 8px 8px 0;
+  padding: 4px;
+  display: flex;
+  align-items: center;
 `;
 
 interface TypeBoxProps {
@@ -29,23 +34,28 @@ const TypeBox: React.FC<TypeBoxProps> = ({channel}) => {
     sendJsonMessage(msg)
   }
   return (
-    <TypeBoxContainer>
-      <div
-        style={{width: 200, display: 'flex', margin: '0'}}
-        onKeyPress={e =>
-          e.key === "Enter" &&
-          message.length > 0 &&
-          send()}
-      >
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <button onClick={send}>
-          Send
-        </button>
-      </div>
+    <TypeBoxContainer
+      onKeyPress={e =>
+        e.key === "Enter" &&
+        message.length > 0 &&
+        send()
+      }
+    >
+      <Input
+        noBorder
+        style={{flex: 1}}
+        placeholder={`Message #${channel}`}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <SendIcon
+        onClick={() => message.length > 0 && send()}
+        style={{
+          margin: '0 16px',
+          fill: message.length > 0 ? palette.yellow : 'rgba(255, 237, 0, 0.25)',
+          cursor: message.length > 0 ? 'pointer' : 'auto'
+        }}
+      />
     </TypeBoxContainer>
   )
 };

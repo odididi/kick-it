@@ -2,7 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import TextField, {TextFieldProps} from '@material-ui/core/TextField';
 
-export const Input = styled(({...rest}: TextFieldProps & {maxRows?: string | number}) => (
+interface CustomInputProps {
+  noBorder?: boolean;
+}
+
+export const Input = styled(({...rest}: TextFieldProps & CustomInputProps) => (
   <TextField
     classes={{
       root: "root",
@@ -19,19 +23,20 @@ export const Input = styled(({...rest}: TextFieldProps & {maxRows?: string | num
     }
     & > div {
       & > fieldset {
+        ${p => p.noBorder && 'border: none'};
         border-color: ${(p) => (p.error ? "#f44336" : "#ffed00")} !important;
       }
       & > input {
         color: #ffed00;
       }
       & > textarea {
-        color: #ffed00;
+        color: green;
       }
     }
     width: 300px;
   }
 `;
 
-export const MultilineInput: React.FC<TextFieldProps> = ({rows, ...rest}) => (
-  <Input multiline rows={rows} maxRows={rows} {...rest} />
+export const MultilineInput: React.FC<TextFieldProps & CustomInputProps> = ({noBorder, ...rest}) => (
+  <Input multiline noBorder={noBorder} {...rest} />
 );

@@ -42,7 +42,7 @@ const ChatButton = styled(({...rest}) => (
       background-color: rgba(255, 237, 0, 0.85);
     }
   &.disabled {
-    background-color: rgba(255, 237, 0, 0.4);
+    background-color: rgba(255, 237, 0, 0.25);
   }
   }
 `;

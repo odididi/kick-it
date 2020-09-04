@@ -1,7 +1,20 @@
 import React from 'react';
 import {useSocket} from 'hooks';
-import {getChannelHistory} from 'services/api';
+import {useLocation} from 'react-router';
 import {ServerChatMessage} from 'kickit-websocket';
+import {getChannelHistory} from 'services/api';
+
+interface ChatContextType {
+  selectedChannel: string;
+  setSelectedChannel: React.Dispatch<React.SetStateAction<string>>;
+  channelMessages: ServerChatMessage[];
+}
+
+const initialContext = {
+  selectedChannel: '',
+  setSelectedChannel: () => {},
+  channelMessages: []
+}
 
 type SET_CHANNEL_HISTORY = 'setChannelHistory';
 type SET_CHANNEL_INCOMING_MESSAGE = 'setChannelIncomingMessage';
@@ -31,18 +44,24 @@ const reducer = (state: ChannelState, action: ChannelAction) => {
       throw new Error();
   }
 }
-const useChannelMessages = (channel: string) => {
+
+export const ChatContext = React.createContext<ChatContextType>(initialContext);
+
+export const ChatContextProvider: React.FC = ({children}) => {
   const {lastJsonMessage} = useSocket();
   const [allMessages, dispatch] = React.useReducer(reducer, {})
+  const location = useLocation();
+  const _selectedChannel = new URLSearchParams(location.search).get("channel") || '';
+  const [selectedChannel, setSelectedChannel] = React.useState<string>(_selectedChannel);
   React.useEffect(() => {
-    if (!channel || Boolean(allMessages[channel])) return;
-    getChannelHistory({channel})
+    if (!selectedChannel || Boolean(allMessages[selectedChannel])) return;
+    getChannelHistory({channel: selectedChannel})
       .then(res => dispatch({
         type: 'setChannelHistory',
-        channel,
+        channel: selectedChannel,
         history: res.data as ServerChatMessage[]
       }))
-  }, [channel, allMessages])
+  }, [selectedChannel, allMessages])
   React.useEffect(() => {
     if (!lastJsonMessage) return;
     dispatch({
@@ -52,7 +71,15 @@ const useChannelMessages = (channel: string) => {
     })
   }, [lastJsonMessage])
 
-  return allMessages[channel] || [];
-}
-
-export default useChannelMessages;
+  return (
+    <ChatContext.Provider
+      value={{
+        selectedChannel,
+        setSelectedChannel,
+        channelMessages: allMessages[selectedChannel] || []
+      }}
+    >
+      {children}
+    </ChatContext.Provider>
+  );
+};

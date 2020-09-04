@@ -6,13 +6,16 @@ import {
   Redirect
 } from 'react-router-dom';
 import {Home, Chat} from 'components/pages';
+import {ChatContextProvider} from 'services/chat';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/chat" exact component={Chat} />
+        <ChatContextProvider>
+          <Route path="/chat" exact component={Chat} />
+        </ChatContextProvider>
         <Redirect to="/" />
       </Switch>
     </BrowserRouter>

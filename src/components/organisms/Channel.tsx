@@ -4,7 +4,9 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Typography from '@material-ui/core/Typography';
 import {palette} from 'styles/theme';
 import {TypeBox, ChatBox} from 'components/organisms';
-import {useResize, useChannelMessages} from 'hooks';
+import {useResize} from 'hooks';
+import {useHistory} from 'react-router';
+import {ChatContext} from 'services/chat';
 
 interface ChannelContainerProps {
   hasSelected: boolean;
@@ -63,34 +65,35 @@ const ArrowBack = styled(({...rest}) => (
   }
 `;
 
-interface ChannelProps {
-  name: string;
-  onBack: () => void;
-}
-
-const Channel: React.FC<ChannelProps> = ({name, onBack}) => {
+const Channel: React.FC = () => {
   const [windowWidth, setWindowWidth] = React.useState<number>(window.innerWidth);
   const resizeTrigger = useResize();
-  const messages = useChannelMessages(name);
+  const {
+    channelMessages,
+    setSelectedChannel,
+    selectedChannel
+  } = React.useContext(ChatContext);
+  const history = useHistory();
   React.useEffect(() =>
     setWindowWidth(window.innerWidth)
   , [resizeTrigger]);
   return (
-    <ChannelContainer hasSelected={Boolean(name)} windowWidth={windowWidth}>
+    <ChannelContainer hasSelected={Boolean(selectedChannel)} windowWidth={windowWidth}>
       <HeaderContainer style={{height: 52}}>
         <ArrowBack
-          onClick={onBack}
+          onClick={() => {
+            history.push('/chat');
+            setSelectedChannel('')
+          }}
         />
         <Typography
           variant="h6"
         >
-          # {name}
+          # {selectedChannel}
         </Typography>
       </HeaderContainer>
-      <ChatBox messages={messages.filter(msg => msg.channel === name)} />
-      <TypeBox
-        channel={name}
-      />
+      <ChatBox messages={channelMessages} />
+      <TypeBox channel={selectedChannel}/>
     </ChannelContainer>
   )
 }

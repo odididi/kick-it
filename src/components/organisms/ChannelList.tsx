@@ -9,6 +9,7 @@ import {AddChannel} from 'components/molecules';
 import {useResize, useUser} from 'hooks';
 import {createChannel} from 'services/api';
 import {palette} from 'styles/theme';
+import {ChatContext} from 'services/chat';
 
 const ChannelListContainer = styled.div`
   display: flex;
@@ -44,14 +45,11 @@ const ChannelsContainer = styled.div`
   width: 100%;
 `;
 
-interface ChannelListProps {
-  onChannelSelect: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const ChannelList: React.FC<ChannelListProps> = ({onChannelSelect}) => {
+const ChannelList: React.FC = () => {
   const {channels: userChannels, setChannels, username} = useUser();
   const history = useHistory();
   const [newChannelName, setNewChannelName] = React.useState('');
+  const {setSelectedChannel} = React.useContext(ChatContext);
   const [newChannelDescription, setNewChannelDescription] = React.useState('');
   const [showError, setShowError] = React.useState(false);
   const [addingChannel, setAddingChannel] = React.useState(false);
@@ -138,7 +136,7 @@ const ChannelList: React.FC<ChannelListProps> = ({onChannelSelect}) => {
         {(userChannels as string[]).map(c => (
           <Row key={c} onClick={() => {
             setAddingChannel(false);
-            onChannelSelect(c);
+            setSelectedChannel(c);
             history.push(`/chat?channel=${c}`)
           }}>
             <Typography variant="h5">

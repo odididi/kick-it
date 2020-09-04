@@ -4,12 +4,11 @@ import {Typography} from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {useHistory} from 'react-router';
-import useResize from 'hooks/useResize';
+import {Logo} from 'components/atoms';
+import {AddChannel} from 'components/molecules';
+import {useResize, useUser} from 'hooks';
 import {createChannel} from 'services/api';
 import {palette} from 'styles/theme';
-import {Logo} from 'components/atoms/Logo';
-import AddChannel from 'components/molecules/AddChannel';
-import useUser from 'hooks/useUser';
 
 const ChannelListContainer = styled.div`
   display: flex;

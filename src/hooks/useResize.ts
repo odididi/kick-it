@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 
-export default () => {
+const useResize = () => {
   const [trigger, setTrigger] = useState(0.1);
   useEffect(() => {
     const handler = () => setTrigger(Math.random());
@@ -10,3 +10,6 @@ export default () => {
 
   return trigger;
 };
+
+export default useResize;
+

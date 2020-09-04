@@ -1,12 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   BrowserRouter,
   Switch,
   Route,
   Redirect
-} from "react-router-dom";
-import Home from "./components/pages/Home";
-import Chat from "./components/pages/Chat";
+} from 'react-router-dom';
+import {Home, Chat} from 'components/pages';
 
 const Router = () => {
   return (

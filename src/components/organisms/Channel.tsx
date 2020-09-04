@@ -2,11 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Typography from '@material-ui/core/Typography';
-import {palette} from '../../styles/theme';
-import useResize from '../../hooks/useResize';
-import TypeBox from './TypeBox';
-import ChatBox from './ChatBox';
-import useChannelMessages from 'hooks/useChannelMessages';
+import {palette} from 'styles/theme';
+import {TypeBox, ChatBox} from 'components/organisms';
+import {useResize, useChannelMessages} from 'hooks';
 
 interface ChannelContainerProps {
   hasSelected: boolean;

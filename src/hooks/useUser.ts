@@ -1,8 +1,8 @@
 import React from 'react';
+import {ReadyState} from 'react-use-websocket';
 import {AuthContext} from 'services/auth';
 import {getUserChannels} from 'services/api';
-import useSocket from './useSocket';
-import {ReadyState} from 'react-use-websocket';
+import {useSocket} from 'hooks';
 
 const useUser = () => {
   const [channels, setChannels] = React.useState<string[]>([]);

@@ -1,5 +1,5 @@
 import React from 'react';
-import useSocket from 'hooks/useSocket';
+import {useSocket} from 'hooks';
 import {getChannelHistory} from 'services/api';
 import {ServerChatMessage} from 'kickit-websocket';
 

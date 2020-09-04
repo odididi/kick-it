@@ -1,6 +1,6 @@
 import React from 'react';
-import useResize from '../../hooks/useResize';
 import styled from 'styled-components';
+import {useResize} from 'hooks';
 
 const Container = styled.div`
   background: #0c1113;

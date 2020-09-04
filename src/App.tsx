@@ -1,8 +1,8 @@
 import React from 'react';
-import Router from './routes';
+import Router from 'routes';
 import {ThemeProvider} from '@material-ui/core';
-import {theme} from './styles/theme';
-import {AuthContextProvider} from './services/auth';
+import {theme} from 'styles/theme';
+import {AuthContextProvider} from 'services/auth';
 
 const App = () => {
   return (

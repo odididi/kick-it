@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Page from '../atoms/Page';
 import {useHistory, useLocation} from 'react-router';
-import Channel from '../organisms/Channel';
-import ChannelList from '../organisms/ChannelList';
+import {Page} from 'components/atoms';
+import {Channel, ChannelList} from 'components/organisms';
 
 const ChatContainer = styled.div`
   display: flex;

@@ -1,6 +1,6 @@
 import React from 'react';
 import useWebSocket from 'react-use-websocket';
-import {AuthContext} from '../services/auth';
+import {AuthContext} from 'services/auth';
 
 const useSocket = () => {
   const {username} = React.useContext(AuthContext);

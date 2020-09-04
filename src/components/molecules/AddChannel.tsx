@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Input, MultilineInput} from '../atoms/Input';
-import {palette} from '../../styles/theme';
+import {Input, MultilineInput} from 'components/atoms';
+import {palette} from 'styles/theme';
 
 const AddChannelContainer = styled.div`
   display: flex;

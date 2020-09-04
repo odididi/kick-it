@@ -8,16 +8,24 @@
     "ecmaVersion": 2018
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "react"],
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "import-quotes"
+  ],
   "env": {
     "browser": true
   },
   "rules": {
+    // eslint
+    "object-curly-spacing": ["error", "never"],
+    // typescript-eslint
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/indent": ["error", 2],
+    // plugins
     "react/jsx-uses-vars": "error",
     "react/jsx-uses-react": "error",
-    "object-curly-spacing": ["error", "never"]
+    "import-quotes/import-quotes": [1, "single"] // or double
   }
 }

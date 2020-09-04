@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {Avatar, Typography} from '@material-ui/core';
 import {groupConsecutiveByProp} from 'utils';
-import {ServerChatMessage} from 'websocket';
+import {ServerChatMessage} from 'kickit-websocket';
 
 const ChatBoxContainer = styled.div`
   display: flex;

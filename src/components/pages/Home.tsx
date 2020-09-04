@@ -2,12 +2,10 @@ import React from 'react';
 import {withRouter, Redirect, useHistory} from 'react-router';
 import styled from 'styled-components';
 import {Button} from '@material-ui/core';
-import Page from '../atoms/Page';
-import {Input} from '../atoms/Input';
-import {AuthContext} from '../../services/auth';
+import {Page, Input} from 'components/atoms';
+import {AuthContext} from 'services/auth';
 
 const Container = styled.div`
-  /* padding: 24px; */
   height: 100%;
   padding: 5%;
   display: flex;
@@ -86,7 +84,7 @@ const Home: React.FC = () => {
             onClick={() => {
               setUsername(_username);
               localStorage.setItem('kickit_username', _username)
-              history.push('/chat?channel=general')
+              history.push('/chat')
             }}
           >
             Start chatting!

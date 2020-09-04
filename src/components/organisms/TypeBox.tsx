@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import useUser from 'hooks/useUser';
-import useSocket from 'hooks/useSocket';
+import {useUser, useSocket} from 'hooks';
 
 const TypeBoxContainer = styled.div`
   height: 60px;

@@ -19,7 +19,6 @@ const ChannelListContainer = styled.div`
   height: 100%;
   @media(min-width: 1024px) {
     width: 320px;
-    background: ${palette.black};
     box-shadow: 0px 0px 4px 0px ${palette.yellow};
   }
 `;
@@ -33,6 +32,8 @@ const HeaderContainer = styled.div`
 `;
 
 const Row = styled.div`
+  display: flex;
+  align-items: center;
   padding: 14px;
   cursor: pointer;
 `;
@@ -43,13 +44,16 @@ const ChannelsContainer = styled.div`
   position: absolute;
   transition: top 0.2s ease;
   width: 100%;
+  @media(min-width: 1024px) {
+    width: 320px;
+  }
 `;
 
 const ChannelList: React.FC = () => {
   const {channels: userChannels, setChannels, username} = useUser();
   const history = useHistory();
   const [newChannelName, setNewChannelName] = React.useState('');
-  const {setSelectedChannel} = React.useContext(ChatContext);
+  const {unreadChannels, selectedChannel} = React.useContext(ChatContext);
   const [newChannelDescription, setNewChannelDescription] = React.useState('');
   const [showError, setShowError] = React.useState(false);
   const [addingChannel, setAddingChannel] = React.useState(false);
@@ -134,14 +138,32 @@ const ChannelList: React.FC = () => {
       />
       <ChannelsContainer style={{top: addingChannel ? 242 : 52}}>
         {(userChannels as string[]).map(c => (
-          <Row key={c} onClick={() => {
-            setAddingChannel(false);
-            setSelectedChannel(c);
-            history.push(`/chat?channel=${c}`)
-          }}>
-            <Typography variant="h5">
+          <Row
+            key={c}
+            style={{background: c === selectedChannel ? '#222' : palette.black}}
+            onClick={() => {
+              setAddingChannel(false);
+              history.push(`/chat?channel=${c}`)
+            }}
+          >
+            <Typography
+              variant="h6"
+              style={{
+                fontStyle: unreadChannels.includes(c) ? 'italic' : 'normal',
+                fontWeight: unreadChannels.includes(c) ? 'bold' : 'normal',
+              }}>
               # {c}
             </Typography>
+            {unreadChannels.includes(c) && (
+              <Typography
+                variant="h6"
+                style={{
+                  color: palette.yellow,
+                  marginLeft: 'auto'
+                }}>
+                {'\u2022'}
+              </Typography>
+            )}
           </Row>
         ))}
       </ChannelsContainer>

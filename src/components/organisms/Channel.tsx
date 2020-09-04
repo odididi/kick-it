@@ -68,11 +68,7 @@ const ArrowBack = styled(({...rest}) => (
 const Channel: React.FC = () => {
   const [windowWidth, setWindowWidth] = React.useState<number>(window.innerWidth);
   const resizeTrigger = useResize();
-  const {
-    channelMessages,
-    setSelectedChannel,
-    selectedChannel
-  } = React.useContext(ChatContext);
+  const {channelMessages, selectedChannel} = React.useContext(ChatContext);
   const history = useHistory();
   React.useEffect(() =>
     setWindowWidth(window.innerWidth)
@@ -83,7 +79,6 @@ const Channel: React.FC = () => {
         <ArrowBack
           onClick={() => {
             history.push('/chat');
-            setSelectedChannel('')
           }}
         />
         <Typography

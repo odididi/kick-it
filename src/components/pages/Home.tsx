@@ -84,7 +84,7 @@ const Home: React.FC = () => {
             onClick={() => {
               setUsername(_username);
               localStorage.setItem('kickit_username', _username)
-              history.push('/chat')
+              history.push('/chat?channel=general')
             }}
           >
             Start chatting!

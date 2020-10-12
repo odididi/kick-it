@@ -83,7 +83,7 @@ const Home: React.FC = () => {
             disabled={_username.length === 0}
             onClick={() => {
               setUsername(_username);
-              localStorage.setItem('kickit_username', _username)
+              sessionStorage.setItem('kickit_username', _username)
               history.push('/chat?channel=general')
             }}
           >

@@ -13,7 +13,7 @@ const initialContext = {
 export const AuthContext = React.createContext<AuthContextType>(initialContext);
 
 export const AuthContextProvider: React.FC = ({children}) => {
-  const [username, setUsername] = React.useState(localStorage.getItem('kickit_username'));
+  const [username, setUsername] = React.useState(sessionStorage.getItem('kickit_username'));
   return (
     <AuthContext.Provider
       value={{

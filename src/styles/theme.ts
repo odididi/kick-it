@@ -6,6 +6,11 @@ export const palette = {
 }
 
 export const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'NBook'
+    ].join(',')
+  },
   breakpoints: {
     values: {
       xs: 0,

@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'NBook';
+  src: local('NBook'), url(../fonts/NBook.otf) format('opentype');
+}
+
+@font-face {
+  font-family: "NBook";
+  src: local('NBold'), url(../fonts/NBold.otf) format('opentype');
+  font-weight: bold;
+}

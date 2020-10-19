@@ -4,6 +4,7 @@ import TextField, {TextFieldProps} from '@material-ui/core/TextField';
 
 interface CustomInputProps {
   noBorder?: boolean;
+  inputColor?: string;
 }
 
 export const Input = styled(({...rest}: TextFieldProps & CustomInputProps) => (
@@ -13,21 +14,21 @@ export const Input = styled(({...rest}: TextFieldProps & CustomInputProps) => (
     }}
     error={rest.error}
     variant="outlined"
-    color="primary"
     {...rest}
   />
 ))`
   &.root {
     & > label {
-      color: #ffed00;
+      color: #DECF17;
     }
     & > div {
       & > fieldset {
         ${p => p.noBorder && 'border: none'};
-        border-color: ${(p) => (p.error ? "#f44336" : "#ffed00")} !important;
+        border-color: ${(p) => (p.error ? "#f44336" : "#DECF17")} !important;
       }
       & > input {
-        color: #ffed00;
+        padding: 16px 12px;
+        color: ${p => p.inputColor || '#DECF17'};
       }
       & > textarea {
         color: green;

@@ -29,9 +29,12 @@ export const createChannel = ({name, description, creator}: CreateChannel): Prom
 
 export const getChannelHistory = ({channel, amount = 20}: GetChannelHistory): Promise<any> =>
   Axios.get(`http://${process.env.REACT_APP_API_URL}/channels/${channel}/lastMessages?amount=${amount}`)
-
+  
 export const subscribeToChannel = ({channel, user}: SubscribeToChannel): Promise<any> =>
   Axios.post(`http://${process.env.REACT_APP_API_URL}/channels/subscription`, JSON.stringify({
     channel,
     user
   }))
+
+export const getStreamInfo = (): Promise<any> =>
+  Axios.get(`http://${process.env.REACT_APP_API_URL}/info`)

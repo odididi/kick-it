@@ -35,14 +35,14 @@ const ChatButton = styled(({...rest}) => (
 ))`
   &.root {
     margin-top: 24px;
-    background-color: #ffed00;
+    background-color: #DECF17;
     width: 300px;
     height: 56px;
     &:hover {
-      background-color: rgba(255, 237, 0, 0.85);
+      background-color: rgba(222, 207, 23, 0.85);
     }
   &.disabled {
-    background-color: rgba(255, 237, 0, 0.25);
+    background-color: rgba(222, 207, 23, 0.25);
   }
   }
 `;
@@ -69,7 +69,6 @@ const Home: React.FC = () => {
             label="Username"
             placeholder="Choose your username..."
             variant="outlined"
-            color="primary"
             value={_username}
             onChange={e => _setUsername(e.target.value)}
             inputProps={{
@@ -84,7 +83,7 @@ const Home: React.FC = () => {
             onClick={() => {
               setUsername(_username);
               sessionStorage.setItem('kickit_username', _username)
-              history.push('/chat?channel=general')
+              history.push('/chat')
             }}
           >
             Start chatting!

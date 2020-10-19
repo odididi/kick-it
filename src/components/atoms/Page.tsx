@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import {useResize} from 'hooks';
 
 const Container = styled.div`
-  background: #0c1113;
+  background: black;
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
+  display: flex;
+  justify-content: center;
 `;
 
 const Page: React.FC = ({children}) => {

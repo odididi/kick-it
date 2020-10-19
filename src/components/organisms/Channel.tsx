@@ -16,68 +16,16 @@ interface ChannelContainerProps {
 const ChannelContainer = styled.div`
   display: flex;
   flex-direction: column;
-  z-index: 3;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translate(${(p: ChannelContainerProps) => p.hasSelected ? '0%' : '100%'});
-  transition: transform 0.2s linear;
-  width: ${(p: ChannelContainerProps) => p.windowWidth}px;
-  height: 100%;
-  background: #333;
-  @media(min-width: 1024px) {
-    transform: none;
-    position: unset;
-    flex: 1;
+  width: 85%;
+  background: white;
+  border-radius: 8px;
+  @media(min-width: 960px) {
+    width: 77%;
   }
-`;
-
-const HeaderContainer = styled.div`
-  background: ${palette.yellow};
-  display: flex;
-  align-items: center;
-  padding: 2px 24px;
-  color: black !important;
-  @media(min-width: 1024px) {
-    background: #333;
-    border-bottom: 1px solid ${palette.yellow};
-    box-sizing: border-box
+  @media(min-width: 1440px) {
+    width: 70%;
   }
-`;
-
-const HeaderTitle = styled(({...rest}) => (
-  <Typography
-    classes={{
-      root: 'root',
-    }}
-    {...rest}
-  />
-))`
-  &.root {
-    color: black;
-    @media(min-width: 1024px) {
-      color: ${palette.yellow};
-    }
-  }
-`;
-
-const ArrowBack = styled(({...rest}) => (
-  <ArrowBackIcon
-    classes={{
-      root: 'root',
-    }}
-    {...rest}
-  />
-))`
-  &.root {
-    margin-right: 16px;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    @media(min-width: 1024px) {
-      display: none;
-    }
-  }
+  box-shadow: 5px 5px rgba(222, 207, 23, 0.55);
 `;
 
 const Channel: React.FC = () => {
@@ -89,19 +37,7 @@ const Channel: React.FC = () => {
     setWindowWidth(window.innerWidth)
   , [resizeTrigger]);
   return (
-    <ChannelContainer hasSelected={Boolean(selectedChannel)} windowWidth={windowWidth}>
-      <HeaderContainer style={{height: 52}}>
-        <ArrowBack
-          onClick={() => {
-            history.push('/chat');
-          }}
-        />
-        <HeaderTitle
-          variant="h6"
-        >
-          # {selectedChannel}
-        </HeaderTitle>
-      </HeaderContainer>
+    <ChannelContainer>
       <ChatBox messages={channelMessages} />
       <TypeBox channel={selectedChannel}/>
     </ChannelContainer>

@@ -3,14 +3,10 @@ import styled from 'styled-components';
 import {useUser, useSocket} from 'hooks';
 import {Input} from 'components/atoms';
 import SendIcon from '@material-ui/icons/Send';
-import {palette} from 'styles/theme';
 
 const TypeBoxContainer = styled.div`
-  height: 60px;
-  background: #333;
   margin-top: auto;
-  border-top: 1px solid yellow;
-  padding: 4px;
+  border-top: 2px solid black;
   display: flex;
   align-items: center;
 `;
@@ -44,15 +40,16 @@ const TypeBox: React.FC<TypeBoxProps> = ({channel}) => {
       <Input
         noBorder
         style={{flex: 1}}
-        placeholder={`Message #${channel}`}
+        placeholder={`Shoot it...`}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        inputColor="black"
       />
       <SendIcon
         onClick={() => message.length > 0 && send()}
         style={{
           margin: '0 16px',
-          fill: message.length > 0 ? palette.yellow : 'rgba(255, 237, 0, 0.25)',
+          fill: message.length > 0 ? 'black' : 'rgba(0, 0, 0, 0.25)',
           cursor: message.length > 0 ? 'pointer' : 'auto'
         }}
       />

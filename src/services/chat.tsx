@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSocket} from 'hooks';
 import {useLocation} from 'react-router';
-import {ServerChatMessage} from 'kickit-websocket';
+import {ServerChatMessage} from 'kickit';
 import {getChannelHistory} from 'services/api';
 import {isNil, uniqBy} from 'ramda';
 
@@ -120,7 +120,7 @@ export const ChatContextProvider: React.FC = ({children}) => {
   React.useEffect(() => {
     dispatch({
       type: 'setSelectedChannel',
-      channel: new URLSearchParams(location.search).get("channel") || ''
+      channel: new URLSearchParams(location.search).get("channel") || 'general'
     })
   }, [location.search])
   React.useEffect(() => {

@@ -9,7 +9,7 @@ const ChatBoxContainer = styled.div`
   flex-direction: column;
   flex: 1;
   /* background: #333; */
-  padding: 12px 16px 0;
+  padding: 12px 0;
   max-height: ${window.innerHeight - 160 - 72 - 53}px;
   overflow-y: auto;
   @media(min-width: 960px) {
@@ -23,6 +23,7 @@ const ChatBoxContainer = styled.div`
 const MessageContainer = styled.div`
   display: flex;
   margin-bottom: 12px;
+  padding: 0 16px;
 `;
 
 const Sender = styled(({...rest}) => (
@@ -36,6 +37,19 @@ const Sender = styled(({...rest}) => (
   &.root {
     font-weight: bold;
   }
+`;
+
+const BotMessageContainer = styled.div`
+  display: flex;
+  background: #DECF17;
+  margin-bottom: 12px;
+  padding: 0;
+  text-align: center;
+`;
+
+const BotMessage = styled.div`
+  margin: 0 auto;
+  text-align: center;
 `;
 
 interface ChatBoxProps {
@@ -52,7 +66,18 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
     <ChatBoxContainer ref={chatBoxRef}>
       {groupedMessages.map(msgGroup => {
         const {user} = msgGroup[0];
-        return (
+        if (user === "deuteros") return (
+          <BotMessageContainer key={msgGroup[0].content}>
+            <BotMessage>
+              {msgGroup.map(msg =>
+                <Typography variant="body2" style={{marginBottom: 8, marginTop: 8}} key={msg.content}>
+                  {msg.content}
+                </Typography>
+              )}
+            </BotMessage>
+          </BotMessageContainer>
+        )
+        else return (
           <MessageContainer key={msgGroup[0].content}>
             <Avatar style={{background: '#888'}}>
               {user.substring(0, 2)}

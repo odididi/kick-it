@@ -30,12 +30,21 @@ const TopSectionContainer = styled.div`
   `;
 
 const PlayerOuterContainer = styled.div`
-  width: 65%;
+  width: 55%;
   margin-left: auto;
   display: flex;
-  justify-content: center;
-  padding: 36px 36px 0;
   box-sizing: border-box;
+  padding-right: 30px;
+  justify-content: right;
+  @media(min-width: 680px) {
+    width: 65%;
+    padding-right: 12px;
+  }
+  @media(min-width: 960px) {
+    width: 65%;
+    justify-content: center;
+    padding: 36px 36px 0;
+  }
   `;
 
 const PlayerInnerContainer = styled.div`
@@ -80,36 +89,44 @@ const BottomSectionContainer = styled.div`
 `;
 
 const LeftBottomContainer = styled.div`
-  min-width: 35%;
-  padding: 36px 64px;
-  box-sizing: border-box;
-  position: relative;
+  display: none;
+  @media(min-width: 960px) {
+    display: block;
+    min-width: 35%;
+    padding: 36px 64px;
+    box-sizing: border-box;
+    position: relative;
+  }
 `;
 
 const K = styled.div`
   /* width: calc(70vh - 300px); */
   height: 100%;
-  background: url('/assets/kickit_frame.png');
+  background: url('/assets/radio_outline.svg');
   background-position-x: right;
   background-size: contain;
   background-repeat: no-repeat;
 `;
 
 const KYellowContainer = styled.div`
-  position: absolute;
-  left: -200px;
-  top: -270px;
+  margin-top: -185px;
+  margin-right: -125px;
   @media(min-width: 960px) {
+    position: absolute;
+    margin: 0;
     left: -130px;
     top: -160px;
   }
   @media(min-width: 1440px) {
+    position: absolute;
+    margin: 0;
     left: -200px;
     top: -270px;
   }
 `;
 
 const KYellow = styled.div`
+  height: 130px;
   @media(min-width: 960px) {
     width: 170px;
     height: 220px;
@@ -120,7 +137,7 @@ const KYellow = styled.div`
     height: 350px;
     margin-bottom: 16px;
   }
-  background: url('/assets/kickit_full.png');
+  background: url('/assets/radio_design.svg');
   background-position-x: center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -128,8 +145,9 @@ const KYellow = styled.div`
 
 const UsernameContainer = styled.div`
   padding: 4px 12px;
+  margin-top: 4px;
   background: white;
-  width: 150px;
+  width: 100px;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -178,7 +196,7 @@ const Chat: React.FC = () => {
               <KYellowContainer>
                 <KYellow />
                 <UsernameContainer>
-                  <Typography style={{fontWeight: 'bold'}} variant="body1" color="secondary">{`Kick it, ${username}!`}</Typography>
+                  <Typography style={{fontWeight: 'bold'}} variant="body2" color="secondary">{`Kick it, ${username}!`}</Typography>
                 </UsernameContainer>
               </KYellowContainer>
               <Channel />

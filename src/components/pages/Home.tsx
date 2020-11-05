@@ -55,12 +55,19 @@ const Home: React.FC = () => {
   React.useEffect(() => {
     inputRef.current.focus();
   }, []);
+
+  const login = () => {
+    setUsername(_username);
+    sessionStorage.setItem('kickit_username', _username)
+    history.push('/chat')
+  }
+
   if (username) {
     return <Redirect to="/chat" />
   }
   return (
     <Page>
-      <Container>
+      <Container onKeyPress={(e: React.KeyboardEvent)=> e.key === 'Enter' && login()}>
         <ContentContainer>
           <Logo />
           <Input
@@ -80,11 +87,7 @@ const Home: React.FC = () => {
           <ChatButton
             color="secondary"
             disabled={_username.length === 0}
-            onClick={() => {
-              setUsername(_username);
-              sessionStorage.setItem('kickit_username', _username)
-              history.push('/chat')
-            }}
+            onClick={login}
           >
             Start chatting!
           </ChatButton>

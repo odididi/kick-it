@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Avatar, Typography} from '@material-ui/core';
 import {groupConsecutiveByProp} from 'utils';
 import {ServerChatMessage} from 'kickit';
+import config from 'kickit-config.js';
 
 const ChatBoxContainer = styled.div`
   display: flex;
@@ -66,8 +67,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
     <ChatBoxContainer ref={chatBoxRef}>
       {groupedMessages.map(msgGroup => {
         const {user} = msgGroup[0];
-        if (user === "deuteros") return (
-          <BotMessageContainer key={msgGroup[0].content}>
+        return user === config.BOT_NAME
+          ?<BotMessageContainer key={msgGroup[0].content}>
             <BotMessage>
               {msgGroup.map(msg =>
                 <Typography variant="body2" style={{marginBottom: 8, marginTop: 8}} key={msg.content}>
@@ -76,9 +77,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
               )}
             </BotMessage>
           </BotMessageContainer>
-        )
-        else return (
-          <MessageContainer key={msgGroup[0].content}>
+          
+          :<MessageContainer key={msgGroup[0].content}>
             <Avatar style={{background: '#888'}}>
               {user.substring(0, 2)}
             </Avatar>
@@ -93,7 +93,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
               )}
             </div>
           </MessageContainer>
-        )
       })}
     </ChatBoxContainer>
   )

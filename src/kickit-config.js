@@ -1,3 +1,3 @@
 export default {
-  BOT_NAME: 'deuteros'
-} 
+  BOT_NAME: 'KickIt-bot'
+}

@@ -5,7 +5,7 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
-import {Home, Chat} from 'components/pages';
+import {Home} from 'components/pages';
 import {ChatContextProvider} from 'services/chat';
 import {StreamContextProvider} from 'services/stream';
 
@@ -14,11 +14,11 @@ const Router = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Home} />
-        <ChatContextProvider>
+        {/* <ChatContextProvider>
           <StreamContextProvider>
             <Route path="/chat" exact component={Chat} />
           </StreamContextProvider>
-        </ChatContextProvider>
+        </ChatContextProvider> */}
         <Redirect to="/" />
       </Switch>
     </BrowserRouter>

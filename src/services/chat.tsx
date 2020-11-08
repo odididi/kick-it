@@ -2,7 +2,7 @@ import React from 'react';
 import {useSocket} from 'hooks';
 import {useLocation} from 'react-router';
 import {ServerChatMessage} from 'kickit';
-import {getChannelHistory} from 'services/api';
+import {getActiveUsers, getChannelHistory} from 'services/api';
 import {isNil, uniqBy} from 'ramda';
 
 type SET_CHANNEL_HISTORY = 'setChannelHistory';
@@ -28,12 +28,14 @@ interface ChatContextType {
   selectedChannel: string;
   channelMessages: ServerChatMessage[];
   unreadChannels: string[];
+  activeUsers: any[];
 }
 
 const initialContext = {
   selectedChannel: '',
   channelMessages: [],
-  unreadChannels: []
+  unreadChannels: [],
+  activeUsers: []
 }
 
 const chatInitialState: ChatState = {
@@ -96,6 +98,7 @@ export const ChatContext = React.createContext<ChatContextType>(initialContext);
 export const ChatContextProvider: React.FC = ({children}) => {
   const {lastJsonMessage} = useSocket();
   const messageHistory = React.useRef([]);
+  const [activeUsers, setActiveUsers] = React.useState([]);
   messageHistory.current = React.useMemo(() => {
     if (isNil(lastJsonMessage)) return messageHistory.current;
     // TODO: remove lastJsonMessage duplicates on id or timestamp
@@ -117,6 +120,9 @@ export const ChatContextProvider: React.FC = ({children}) => {
     unreadChannels
   } = chatState;
   const location = useLocation();
+  React.useEffect(() => {
+    getActiveUsers().then(({data})=>setActiveUsers(data))
+  }, [])
   React.useEffect(() => {
     dispatch({
       type: 'setSelectedChannel',
@@ -155,7 +161,8 @@ export const ChatContextProvider: React.FC = ({children}) => {
         channelMessages: messages[selectedChannel]
           ? [...messages[selectedChannel], ...selectedChannelSocketHistory]
           : selectedChannelSocketHistory,
-        unreadChannels
+        unreadChannels,
+        activeUsers
       }}
     >
       {children}

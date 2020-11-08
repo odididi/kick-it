@@ -143,7 +143,7 @@ const ChannelList: React.FC = () => {
             style={{background: c === selectedChannel ? '#222' : palette.black}}
             onClick={() => {
               setAddingChannel(false);
-              history.push(`/chat?channel=${c}`)
+              history.push(`/?channel=${c}`)
             }}
           >
             <Typography

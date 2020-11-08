@@ -5,6 +5,7 @@ import {Button} from '@material-ui/core';
 import {Input} from 'components/atoms';
 import {AuthContext} from 'services/auth';
 import {Channel} from 'components/organisms';
+import {ChatContext} from 'services/chat';
 
 const Container = styled.div`
   height: 100%;
@@ -42,13 +43,22 @@ const ChatButton = styled(({...rest}) => (
 const Chat: React.FC = () => {
   const history = useHistory();
   const [_username, _setUsername] = React.useState('');
+  const [_usernameTaken, _setUsernameTaken] = React.useState(false);
   const {username, setUsername} = React.useContext(AuthContext);
+  const {activeUsers} = React.useContext(ChatContext);
   const inputRef = React.useRef(document.createElement('input'));
   React.useEffect(() => {
     inputRef.current.focus();
   }, []);
 
   const login = () => {
+    const usernames = activeUsers.map(u=>u.name)
+    console.log({usernames, _username});
+    if (usernames.includes(_username)) {
+      console.log('taken');
+      _setUsernameTaken(true);
+      return;
+    }
     setUsername(_username);
     sessionStorage.setItem('kickit_username', _username)
     history.push('/')
@@ -67,6 +77,8 @@ const Chat: React.FC = () => {
             variant="outlined"
             value={_username}
             onChange={e => _setUsername(e.target.value)}
+            error={_usernameTaken}
+            helperText={_usernameTaken && "Username already taken! Choose another one!"}
             inputProps={{
               form: {
                 autocomplete: 'off',

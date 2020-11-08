@@ -38,3 +38,6 @@ export const subscribeToChannel = ({channel, user}: SubscribeToChannel): Promise
 
 export const getStreamInfo = (): Promise<any> =>
   Axios.get(`http://${process.env.REACT_APP_API_URL}/info`)
+
+export const getActiveUsers = (): Promise<any> =>
+  Axios.get(`http://${process.env.REACT_APP_API_URL}/users`)

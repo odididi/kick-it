@@ -8,17 +8,17 @@ import {
 import {Home} from 'components/pages';
 import {ChatContextProvider} from 'services/chat';
 import {StreamContextProvider} from 'services/stream';
+import {Channel} from 'components/organisms';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Home} />
-        {/* <ChatContextProvider>
+        <ChatContextProvider>
           <StreamContextProvider>
-            <Route path="/chat" exact component={Chat} />
+            <Route path="/" exact component={Home} />
           </StreamContextProvider>
-        </ChatContextProvider> */}
+        </ChatContextProvider>
         <Redirect to="/" />
       </Switch>
     </BrowserRouter>

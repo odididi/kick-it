@@ -55,9 +55,7 @@ const Chat: React.FC = () => {
   }
 
   return username 
-    ?(
-      <Channel/>
-    )
+    ?<Channel/>
     :(
       <Container onKeyPress={(e: React.KeyboardEvent)=> e.key === 'Enter' && login()}>
         <ContentContainer>

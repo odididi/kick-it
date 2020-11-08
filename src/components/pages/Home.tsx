@@ -171,13 +171,6 @@ const UsernameContainer = styled.div`
 const Home: React.FC = () => {
   const {streamerName} = React.useContext(StreamContext);
   const {username} = React.useContext(AuthContext);
-  const {currentSong: {songArtist, songTitle}} = React.useContext(StreamContext);
-  const playerRef = React.useRef(document.createElement('audio'));
-  const [paused, setPaused] = React.useState<boolean>(true);
-  React.useEffect(() => {
-    setPaused(false);
-    playerRef.current.play();
-  }, [])
   return (
     <Page>
       <ChatContainer>

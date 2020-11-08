@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import React from 'react';
 import styled from 'styled-components';
 import {Avatar, Typography} from '@material-ui/core';
@@ -66,7 +67,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
   return (
     <ChatBoxContainer ref={chatBoxRef}>
       {groupedMessages.map(msgGroup => {
-        const {user} = msgGroup[0];
+        const {user, user_color} = msgGroup[0];
         return user === config.BOT_NAME
           ?<BotMessageContainer key={msgGroup[0].timestamp}>
             <BotMessage>
@@ -79,7 +80,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
           </BotMessageContainer>
           
           :<MessageContainer key={msgGroup[0].timestamp}>
-            <Avatar style={{background: '#888'}}>
+            <Avatar style={{background: user_color}}>
               {user.substring(0, 2)}
             </Avatar>
             <div style={{marginLeft: 16}}>

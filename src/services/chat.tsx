@@ -29,13 +29,17 @@ interface ChatContextType {
   channelMessages: ServerChatMessage[];
   unreadChannels: string[];
   activeUsers: any[];
+  sendJsonMessage: any;
+  connectionStatus: any;
 }
 
 const initialContext = {
   selectedChannel: '',
   channelMessages: [],
   unreadChannels: [],
-  activeUsers: []
+  activeUsers: [],
+  sendJsonMessage: () => {},
+  connectionStatus: ''
 }
 
 const chatInitialState: ChatState = {
@@ -96,7 +100,7 @@ const reducer = (state: ChatState, action: ChatAction): ChatState => {
 export const ChatContext = React.createContext<ChatContextType>(initialContext);
 
 export const ChatContextProvider: React.FC = ({children}) => {
-  const {lastJsonMessage} = useSocket();
+  const {lastJsonMessage, sendJsonMessage, connectionStatus} = useSocket();
   const messageHistory = React.useRef([]);
   const [activeUsers, setActiveUsers] = React.useState([]);
   messageHistory.current = React.useMemo(() => {
@@ -162,7 +166,9 @@ export const ChatContextProvider: React.FC = ({children}) => {
           ? [...messages[selectedChannel], ...selectedChannelSocketHistory]
           : selectedChannelSocketHistory,
         unreadChannels,
-        activeUsers
+        activeUsers,
+        sendJsonMessage,
+        connectionStatus
       }}
     >
       {children}

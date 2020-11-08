@@ -5,7 +5,7 @@ import {Button} from '@material-ui/core';
 import {Input} from 'components/atoms';
 import {AuthContext} from 'services/auth';
 import {Channel} from 'components/organisms';
-import {ChatContext} from 'services/chat';
+import {ChatContext, ChatContextProvider} from 'services/chat';
 
 const Container = styled.div`
   height: 100%;
@@ -53,9 +53,7 @@ const Chat: React.FC = () => {
 
   const login = () => {
     const usernames = activeUsers.map(u=>u.name)
-    console.log({usernames, _username});
     if (usernames.includes(_username)) {
-      console.log('taken');
       _setUsernameTaken(true);
       return;
     }
@@ -65,8 +63,11 @@ const Chat: React.FC = () => {
   }
 
   return username 
-    ?<Channel/>
-    :(
+    ? (
+      <ChatContextProvider>
+        <Channel />
+      </ChatContextProvider>
+    ):(
       <Container onKeyPress={(e: React.KeyboardEvent)=> e.key === 'Enter' && login()}>
         <ContentContainer>
           <Input

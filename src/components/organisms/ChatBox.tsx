@@ -68,17 +68,17 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
       {groupedMessages.map(msgGroup => {
         const {user} = msgGroup[0];
         return user === config.BOT_NAME
-          ?<BotMessageContainer key={msgGroup[0].content}>
+          ?<BotMessageContainer key={msgGroup[0].timestamp}>
             <BotMessage>
               {msgGroup.map(msg =>
-                <Typography variant="body2" style={{marginBottom: 8, marginTop: 8}} key={msg.content}>
+                <Typography variant="body2" style={{marginBottom: 8, marginTop: 8}} key={msg.timestamp}>
                   {msg.content}
                 </Typography>
               )}
             </BotMessage>
           </BotMessageContainer>
           
-          :<MessageContainer key={msgGroup[0].content}>
+          :<MessageContainer key={msgGroup[0].timestamp}>
             <Avatar style={{background: '#888'}}>
               {user.substring(0, 2)}
             </Avatar>
@@ -87,7 +87,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
                 {user}
               </Sender>
               {msgGroup.map(msg =>
-                <Typography variant="body2" style={{marginBottom: 8}} key={msg.content}>
+                <Typography variant="body2" style={{marginBottom: 8}} key={msg.timestamp}>
                   {msg.content}
                 </Typography>
               )}

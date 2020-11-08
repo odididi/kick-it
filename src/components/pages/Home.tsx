@@ -4,6 +4,7 @@ import {Page} from 'components/atoms';
 import {Typography} from '@material-ui/core';
 import {AuthContext} from 'services/auth';
 import {StreamContext} from 'services/stream';
+import {ChatContextProvider} from 'services/chat';
 import Player from 'components/organisms/Player';
 import {withRouter} from 'react-router';
 import Chat from 'components/organisms/Chat';

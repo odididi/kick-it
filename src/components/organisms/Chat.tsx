@@ -29,7 +29,7 @@ const ChatButton = styled(({...rest}) => (
   &.root {
     margin-top: 24px;
     background-color: #DECF17;
-    width: 300px;
+    width: 260px;
     height: 56px;
     &:hover {
       background-color: rgba(222, 207, 23, 0.85);

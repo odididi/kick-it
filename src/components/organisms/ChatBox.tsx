@@ -12,7 +12,10 @@ const ChatBoxContainer = styled.div`
   flex: 1;
   /* background: #333; */
   padding: 12px 0;
-  max-height: ${window.innerHeight - 160 - 72 - 53}px;
+  max-height: ${window.innerHeight - 140 - 32 - 53}px;
+  & > div:last-child {
+    margin-bottom: 0;
+  }
   overflow-y: auto;
   @media(min-width: 960px) {
     max-height: ${window.innerHeight - 180 - 72 - 53}px;

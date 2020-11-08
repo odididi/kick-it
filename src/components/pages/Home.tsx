@@ -20,8 +20,9 @@ const show = '"Related"';
 
 const TopSectionContainer = styled.div`
   background: white;
-  height: 160px;
+  height: 140px;
   display: flex;
+  justify-content: center;
   @media(min-width: 960px) {
     height: 180px;
   }
@@ -31,17 +32,16 @@ const TopSectionContainer = styled.div`
   `;
 
 const PlayerOuterContainer = styled.div`
-  width: 55%;
-  margin-left: auto;
+  width: calc(100% - 32px);
   display: flex;
   box-sizing: border-box;
-  padding-right: 30px;
-  justify-content: right;
   @media(min-width: 680px) {
-    width: 65%;
-    padding-right: 12px;
+    margin-left: 300px;
+    width: calc(100% - 300px);
+    padding-right: 16px;
   }
   @media(min-width: 960px) {
+    margin-left: auto;
     width: 65%;
     justify-content: center;
     padding: 36px 36px 0;
@@ -49,7 +49,7 @@ const PlayerOuterContainer = styled.div`
   `;
 
 const PlayerInnerContainer = styled.div`
-  width: 85%;
+  width: calc(100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -80,7 +80,7 @@ const BottomSectionContainer = styled.div`
   background: black;
   flex: 1;
   display: flex;
-  max-height: calc(100vh - 160px);
+  max-height: calc(100vh - 140px);
   @media(min-width: 960px) {
     max-height: calc(100vh - 180px);
   }
@@ -111,7 +111,15 @@ const K = styled.div`
 
 const KYellow = styled.div`
   height: 130px;
+  display: none;
+  @media(min-width: 680px) {
+    display: block;
+    width: 170px;
+    height: 120px;
+    margin-bottom: 12px;
+  }
   @media(min-width: 960px) {
+    display: block;
     width: 170px;
     height: 220px;
     margin-bottom: 12px;
@@ -130,15 +138,25 @@ const KYellow = styled.div`
 const RightBottomContainer = styled.div`
   flex: 1;
   display: flex;
-  padding: 36px;
   justify-content: center;
   position: relative;
+  @media(min-width: 960px) {
+    padding: 36px;
+  }
 `;
 
 const KYellowContainer = styled.div`
-  margin-top: -185px;
-  margin-right: -125px;
+  display: none;
+  @media(min-width: 680px) {
+    display: flex;
+    align-items: flex-start;
+    position: absolute;
+    margin: 0;
+    left: 0;
+    top: -132px;
+  }
   @media(min-width: 960px) {
+    display: block;
     position: absolute;
     margin: 0;
     left: -130px;
@@ -160,8 +178,20 @@ const UsernameContainer = styled.div`
   border-radius: 8px;
   display: flex;
   align-items: center;
-  box-shadow: 4px 4px rgba(222, 207, 23, 0.55);
+  @media(min-width: 680px) {
+    background: black;
+    color: rgb(222, 207, 23);
+    width: 122px;
+    margin-left: -70px;
+    margin-top: 30px;
+  }
   @media(min-width: 960px) {
+    background: white;
+    color: black;
+    margin-left: 0;
+    margin-top: 4px;
+    box-shadow: 4px 4px rgba(222, 207, 23, 0.55);
+    color: black;
     width: 122px;
   }
   @media(min-width: 1440px) {
@@ -194,7 +224,7 @@ const Home: React.FC = () => {
               <KYellow />
               {
                 username && <UsernameContainer>
-                  <Typography style={{fontWeight: 'bold'}} variant="body2" color="secondary">{`Kick it, ${username}!`}</Typography>
+                  <Typography style={{fontWeight: 'bold'}} variant="body2">{`Kick it, ${username}!`}</Typography>
                 </UsernameContainer>
               }
             </KYellowContainer>

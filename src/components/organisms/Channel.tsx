@@ -16,10 +16,12 @@ interface ChannelContainerProps {
 const ChannelContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 85%;
+  width: 100%;
+  margin: 16px;
   background: white;
   border-radius: 8px;
   @media(min-width: 960px) {
+    margin: 0;
     width: 77%;
   }
   @media(min-width: 1440px) {

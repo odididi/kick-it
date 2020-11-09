@@ -4,7 +4,6 @@ import {Page} from 'components/atoms';
 import {Typography} from '@material-ui/core';
 import {AuthContext} from 'services/auth';
 import {StreamContext} from 'services/stream';
-import {ChatContextProvider} from 'services/chat';
 import Player from 'components/organisms/Player';
 import {withRouter} from 'react-router';
 import Chat from 'components/organisms/Chat';
@@ -59,12 +58,6 @@ const PlayerInnerContainer = styled.div`
   @media(min-width: 1440px) {
     width: 70%;
   }
-`;
-
-const PlayerContainer = styled.div`
-  background: green;
-  height: 120px;
-  margin-bottom: 24px;
 `;
 
 const CurrentPlayingContainer = styled.div`

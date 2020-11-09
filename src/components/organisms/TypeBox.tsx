@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useUser, useSocket} from 'hooks';
+import {useUser} from 'hooks';
 import {Input} from 'components/atoms';
 import SendIcon from '@material-ui/icons/Send';
 import {ChatContext} from 'services/chat';

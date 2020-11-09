@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter, Redirect, useHistory} from 'react-router';
+import {useHistory} from 'react-router';
 import styled from 'styled-components';
 import {Button} from '@material-ui/core';
 import {Input} from 'components/atoms';

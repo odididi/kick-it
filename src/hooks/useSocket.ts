@@ -15,7 +15,7 @@ const useSocket = () => {
     lastJsonMessage,
     readyState,
     getWebSocket
-  } = useWebSocket(`wss://${process.env.REACT_APP_API_URL}/chat?username=${username}`, {
+  } = useWebSocket(`ws://${process.env.REACT_APP_API_URL}/chat?username=${username}`, {
     share: true,
     onError: (error) => {
       console.log('socket error' + error.type)

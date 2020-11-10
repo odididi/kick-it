@@ -18,26 +18,26 @@ type SubscribeToChannel = {
 }
 
 export const getUserChannels = (user: string) =>
-  Axios.get(`http://${process.env.REACT_APP_API_URL}/users/${user}/channels`);
+  Axios.get(`https://${process.env.REACT_APP_API_URL}/users/${user}/channels`);
 
 export const createChannel = ({name, description, creator}: CreateChannel): Promise<any> =>
-  Axios.post(`http://${process.env.REACT_APP_API_URL}/channels`, JSON.stringify({
+  Axios.post(`https://${process.env.REACT_APP_API_URL}/channels`, JSON.stringify({
     name,
     description,
     creator
   }))
 
 export const getChannelHistory = ({channel, amount = 20}: GetChannelHistory): Promise<any> =>
-  Axios.get(`http://${process.env.REACT_APP_API_URL}/channels/${channel}/lastMessages?amount=${amount}`)
+  Axios.get(`https://${process.env.REACT_APP_API_URL}/channels/${channel}/lastMessages?amount=${amount}`)
   
 export const subscribeToChannel = ({channel, user}: SubscribeToChannel): Promise<any> =>
-  Axios.post(`http://${process.env.REACT_APP_API_URL}/channels/subscription`, JSON.stringify({
+  Axios.post(`https://${process.env.REACT_APP_API_URL}/channels/subscription`, JSON.stringify({
     channel,
     user
   }))
 
 export const getStreamInfo = (): Promise<any> =>
-  Axios.get(`http://${process.env.REACT_APP_API_URL}/info`)
+  Axios.get(`https://${process.env.REACT_APP_API_URL}/info`)
 
 export const getActiveUsers = (): Promise<any> =>
-  Axios.get(`http://${process.env.REACT_APP_API_URL}/users`)
+  Axios.get(`https://${process.env.REACT_APP_API_URL}/users`)

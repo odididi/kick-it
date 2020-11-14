@@ -4,6 +4,7 @@ declare module "kickit" {
     content: string;
     user: string;
     channel: string;
+    user_color; string;
   }
 
   export interface ServerChatMessage extends ClientChatMessage {

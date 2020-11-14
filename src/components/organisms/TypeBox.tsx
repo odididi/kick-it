@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useUser, useSocket} from 'hooks';
+import {useUser} from 'hooks';
 import {Input} from 'components/atoms';
 import SendIcon from '@material-ui/icons/Send';
+import {ChatContext} from 'services/chat';
 
 const TypeBoxContainer = styled.div`
   margin-top: auto;
@@ -16,7 +17,7 @@ interface TypeBoxProps {
 }
 
 const TypeBox: React.FC<TypeBoxProps> = ({channel}) => {
-  const {sendJsonMessage} = useSocket();
+  const {sendJsonMessage} = React.useContext(ChatContext);
   const {username} = useUser();
   const [message, setMessage] = React.useState('');
   const send = () => {

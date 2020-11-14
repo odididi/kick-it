@@ -1,16 +1,21 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import React from 'react';
 import styled from 'styled-components';
 import {Avatar, Typography} from '@material-ui/core';
 import {groupConsecutiveByProp} from 'utils';
 import {ServerChatMessage} from 'kickit';
+import config from 'kickit-config.js';
 
 const ChatBoxContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
   /* background: #333; */
-  padding: 12px 16px 0;
-  max-height: ${window.innerHeight - 160 - 72 - 53}px;
+  padding: 12px 0;
+  max-height: ${window.innerHeight - 140 - 32 - 53}px;
+  & > div:last-child {
+    margin-bottom: 0;
+  }
   overflow-y: auto;
   @media(min-width: 960px) {
     max-height: ${window.innerHeight - 180 - 72 - 53}px;
@@ -23,6 +28,7 @@ const ChatBoxContainer = styled.div`
 const MessageContainer = styled.div`
   display: flex;
   margin-bottom: 12px;
+  padding: 0 16px;
 `;
 
 const Sender = styled(({...rest}) => (
@@ -38,6 +44,19 @@ const Sender = styled(({...rest}) => (
   }
 `;
 
+const BotMessageContainer = styled.div`
+  display: flex;
+  background: #DECF17;
+  margin-bottom: 12px;
+  padding: 0;
+  text-align: center;
+`;
+
+const BotMessage = styled.div`
+  margin: 0 auto;
+  text-align: center;
+`;
+
 interface ChatBoxProps {
   messages: ServerChatMessage[];
 }
@@ -51,10 +70,20 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
   return (
     <ChatBoxContainer ref={chatBoxRef}>
       {groupedMessages.map(msgGroup => {
-        const {user} = msgGroup[0];
-        return (
-          <MessageContainer key={msgGroup[0].content}>
-            <Avatar style={{background: '#888'}}>
+        const {user, user_color} = msgGroup[0];
+        return user === config.BOT_NAME
+          ?<BotMessageContainer key={msgGroup[0].timestamp}>
+            <BotMessage>
+              {msgGroup.map(msg =>
+                <Typography variant="body2" style={{marginBottom: 8, marginTop: 8}} key={msg.timestamp}>
+                  {msg.content}
+                </Typography>
+              )}
+            </BotMessage>
+          </BotMessageContainer>
+          
+          :<MessageContainer key={msgGroup[0].timestamp}>
+            <Avatar style={{background: user_color}}>
               {user.substring(0, 2)}
             </Avatar>
             <div style={{marginLeft: 16}}>
@@ -62,13 +91,12 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
                 {user}
               </Sender>
               {msgGroup.map(msg =>
-                <Typography variant="body2" style={{marginBottom: 8}} key={msg.content}>
+                <Typography variant="body2" style={{marginBottom: 8}} key={msg.timestamp}>
                   {msg.content}
                 </Typography>
               )}
             </div>
           </MessageContainer>
-        )
       })}
     </ChatBoxContainer>
   )

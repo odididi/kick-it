@@ -34,7 +34,7 @@ export const Input = styled(({...rest}: TextFieldProps & CustomInputProps) => (
         color: green;
       }
     }
-    width: 300px;
+    width: 260px;
   }
 `;
 

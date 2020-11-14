@@ -5,20 +5,16 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
-import {Home, Chat} from 'components/pages';
-import {ChatContextProvider} from 'services/chat';
+import {Home} from 'components/pages';
 import {StreamContextProvider} from 'services/stream';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Home} />
-        <ChatContextProvider>
-          <StreamContextProvider>
-            <Route path="/chat" exact component={Chat} />
-          </StreamContextProvider>
-        </ChatContextProvider>
+        <StreamContextProvider>
+          <Route path="/" exact component={Home} />
+        </StreamContextProvider>
         <Redirect to="/" />
       </Switch>
     </BrowserRouter>

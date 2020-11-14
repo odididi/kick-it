@@ -10,6 +10,7 @@ import {StreamContext} from 'services/stream';
 const PlayerContainer = styled.div`
   margin-bottom: 24px;
   display: flex;
+  width: 100%;
 `;
 
 const PlayPauseButton = styled(({...rest}) => (
@@ -25,6 +26,7 @@ const PlayPauseButton = styled(({...rest}) => (
     border-radius: 50%;
     cursor: pointer;
     margin-right: 24px;
+    box-shadow: 4px 4px rgba(222, 207, 23, 0.55);
     @media(min-width: 960px) {
       width: 70px;
       height: 70px;
@@ -64,6 +66,7 @@ const PauseIcon = styled(PauseRoundedIcon)`
 const CurrentSongInfo = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `;
 
 const Player: React.FC = () => {

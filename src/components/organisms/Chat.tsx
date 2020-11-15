@@ -5,7 +5,7 @@ import {Button} from '@material-ui/core';
 import {Input} from 'components/atoms';
 import {AuthContext} from 'services/auth';
 import {Channel} from 'components/organisms';
-import {ChatContext, ChatContextProvider} from 'services/chat';
+import {ChatContextProvider} from 'services/chat';
 import {StreamContext} from 'services/stream';
 
 const Container = styled.div`

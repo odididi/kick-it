@@ -7,11 +7,12 @@ import {StreamContext} from 'services/stream';
 import Player from 'components/organisms/Player';
 import {withRouter} from 'react-router';
 import Chat from 'components/organisms/Chat';
+import {useResize} from 'hooks';
 
 const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: ${(p: {windowheight: number}) => p.windowheight}px;
   flex: 1;
 `;
 
@@ -73,13 +74,16 @@ const BottomSectionContainer = styled.div`
   background: black;
   flex: 1;
   display: flex;
-  max-height: calc(100vh - 140px);
-  @media(min-width: 960px) {
-    max-height: calc(100vh - 180px);
-  }
-  @media(min-width: 1440px) {
-    max-height: calc(100vh - 300px);
-  }
+  ${(p: {windowheight: number}) => `
+    max-height: ${p.windowheight - 140}px;
+    @media(min-width: 960px) {
+      max-height: ${p.windowheight - 180}px;
+    }
+    @media(min-width: 1440px) {
+      max-height: ${p.windowheight - 300}px;
+    }
+  `}
+
 `;
 
 const LeftBottomContainer = styled.div`
@@ -201,10 +205,15 @@ const NowPlaying = () => {
   )
 }
 const Home: React.FC = () => {
+  const [windowHeight, setWindowHeight] = React.useState(window.innerHeight);
+  const resizeTrigger = useResize();
+  React.useEffect(() => {
+    setWindowHeight(window.innerHeight);
+  }, [resizeTrigger])
   const {username} = React.useContext(AuthContext);
   return (
     <Page>
-      <ChatContainer>
+      <ChatContainer windowheight={windowHeight}>
         <TopSectionContainer>
           <PlayerOuterContainer>
             <PlayerInnerContainer>
@@ -215,7 +224,7 @@ const Home: React.FC = () => {
             </PlayerInnerContainer>
           </PlayerOuterContainer>
         </TopSectionContainer>
-        <BottomSectionContainer>
+        <BottomSectionContainer windowheight={windowHeight}>
           <LeftBottomContainer>
             <K />
           </LeftBottomContainer>

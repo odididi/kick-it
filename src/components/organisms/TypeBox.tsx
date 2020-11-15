@@ -39,12 +39,12 @@ const TypeBox: React.FC<TypeBoxProps> = ({channel}) => {
       }
     >
       <Input
-        noBorder
+        noborder="true"
         style={{flex: 1}}
         placeholder={`Shoot it...`}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        inputColor="black"
+        _color="black"
       />
       <SendIcon
         onClick={() => message.length > 0 && send()}

@@ -125,7 +125,7 @@ export const ChatContextProvider: React.FC = ({children}) => {
   } = chatState;
   const location = useLocation();
   React.useEffect(() => {
-    getActiveUsers().then(({data})=>setActiveUsers(data))
+    getActiveUsers().then(({data}) => setActiveUsers(data))
   }, [])
   React.useEffect(() => {
     dispatch({

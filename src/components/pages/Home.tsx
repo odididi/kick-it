@@ -192,8 +192,15 @@ const UsernameContainer = styled.div`
   }
   `;
 
-const Home: React.FC = () => {
+const NowPlaying = () => {
   const {streamerName} = React.useContext(StreamContext);
+  return (
+    <Typography style={{fontWeight: 'bold'}} variant="h6" color="secondary">
+      {`${streamerName === '' ? 'Playlist' : `Live: ${show}`}`}
+    </Typography>
+  )
+}
+const Home: React.FC = () => {
   const {username} = React.useContext(AuthContext);
   return (
     <Page>
@@ -203,7 +210,7 @@ const Home: React.FC = () => {
             <PlayerInnerContainer>
               <Player />
               <CurrentPlayingContainer>
-                <Typography style={{fontWeight: 'bold'}} variant="h6" color="secondary">{`${streamerName === '' ? 'Playlist' : `Live: ${show}`}`}</Typography>
+                <NowPlaying />
               </CurrentPlayingContainer>
             </PlayerInnerContainer>
           </PlayerOuterContainer>

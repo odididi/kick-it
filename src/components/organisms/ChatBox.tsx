@@ -5,6 +5,7 @@ import {Avatar, Typography} from '@material-ui/core';
 import {groupConsecutiveByProp} from 'utils';
 import {ServerChatMessage} from 'kickit';
 import config from 'kickit-config.js';
+import {AuthContext} from 'services/auth';
 
 const ChatBoxContainer = styled.div`
   display: flex;
@@ -63,8 +64,11 @@ interface ChatBoxProps {
 
 const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
   const chatBoxRef = React.useRef(document.createElement('div'));
+  const {username} = React.useContext(AuthContext);
   const groupedMessages = groupConsecutiveByProp(messages, "user");
   React.useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage && lastMessage.user !== username) return;
     chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
   }, [messages])
   return (

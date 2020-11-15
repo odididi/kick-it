@@ -16,8 +16,6 @@ const ChatContainer = styled.div`
   flex: 1;
 `;
 
-const show = '"Related"';
-
 const TopSectionContainer = styled.div`
   background: white;
   height: 140px;
@@ -200,7 +198,7 @@ const NowPlaying = () => {
   const {streamerName} = React.useContext(StreamContext);
   return (
     <Typography style={{fontWeight: 'bold'}} variant="h6" color="secondary">
-      {`${streamerName === '' ? 'Playlist' : `Live: ${show}`}`}
+      {`${streamerName === '' ? 'Playlist' : `Live: ${streamerName}`}`}
     </Typography>
   )
 }

@@ -27,13 +27,7 @@ const ChannelContainer = styled.div`
 `;
 
 const Channel: React.FC = () => {
-  const [windowWidth, setWindowWidth] = React.useState<number>(window.innerWidth);
-  const resizeTrigger = useResize();
   const {channelMessages, selectedChannel} = React.useContext(ChatContext);
-  // const history = useHistory();
-  React.useEffect(() =>
-    setWindowWidth(window.innerWidth)
-  , [resizeTrigger]);
   return (
     <ChannelContainer>
       <ChatBox messages={channelMessages} />

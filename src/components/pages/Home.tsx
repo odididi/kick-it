@@ -15,8 +15,6 @@ const ChatContainer = styled.div`
   flex: 1;
 `;
 
-const show = '"Related"';
-
 const TopSectionContainer = styled.div`
   background: white;
   height: 140px;
@@ -203,7 +201,7 @@ const Home: React.FC = () => {
             <PlayerInnerContainer>
               <Player />
               <CurrentPlayingContainer>
-                <Typography style={{fontWeight: 'bold'}} variant="h6" color="secondary">{`${streamerName === '' ? 'Playlist' : `Live: ${show}`}`}</Typography>
+                <Typography style={{fontWeight: 'bold'}} variant="h6" color="secondary">{`${streamerName === '' ? 'Playlist' : `Live: ${streamerName}`}`}</Typography>
               </CurrentPlayingContainer>
             </PlayerInnerContainer>
           </PlayerOuterContainer>

@@ -18,6 +18,7 @@ interface TypeBoxProps {
 
 const TypeBox: React.FC<TypeBoxProps> = ({channel}) => {
   const {sendJsonMessage} = React.useContext(ChatContext);
+  const inputRef = React.useRef(document.createElement('input'));
   const {username} = useUser();
   const [message, setMessage] = React.useState('');
   const send = () => {
@@ -29,6 +30,7 @@ const TypeBox: React.FC<TypeBoxProps> = ({channel}) => {
     }
     setMessage('');
     sendJsonMessage(msg)
+    inputRef.current.focus();
   }
   return (
     <TypeBoxContainer
@@ -39,6 +41,7 @@ const TypeBox: React.FC<TypeBoxProps> = ({channel}) => {
       }
     >
       <Input
+        inputRef={inputRef}
         noborder="true"
         style={{flex: 1}}
         placeholder={`Shoot it...`}

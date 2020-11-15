@@ -6,6 +6,7 @@ import {Input} from 'components/atoms';
 import {AuthContext} from 'services/auth';
 import {Channel} from 'components/organisms';
 import {ChatContext, ChatContextProvider} from 'services/chat';
+import {StreamContext} from 'services/stream';
 
 const Container = styled.div`
   height: 100%;
@@ -43,9 +44,9 @@ const ChatButton = styled(({...rest}) => (
 const Chat: React.FC = () => {
   const history = useHistory();
   const [_username, _setUsername] = React.useState('');
-  const [_usernameTaken, _setUsernameTaken] = React.useState(false);
+  const [_usernameTaken, _setUsernameTaken] = React.useState('');
   const {username, setUsername} = React.useContext(AuthContext);
-  const {activeUsers} = React.useContext(ChatContext);
+  const {activeUsers} = React.useContext(StreamContext);
   const inputRef = React.useRef(document.createElement('input'));
   React.useEffect(() => {
     inputRef.current.focus();
@@ -54,7 +55,7 @@ const Chat: React.FC = () => {
   const login = () => {
     const usernames = activeUsers.map(u=>u.name)
     if (usernames.includes(_username)) {
-      _setUsernameTaken(true);
+      _setUsernameTaken(_username);
       return;
     }
     setUsername(_username);
@@ -78,8 +79,8 @@ const Chat: React.FC = () => {
             variant="outlined"
             value={_username}
             onChange={e => _setUsername(e.target.value)}
-            error={_usernameTaken}
-            helperText={_usernameTaken && "Username already taken! Choose another one!"}
+            error={Boolean(_usernameTaken)}
+            helperText={_usernameTaken && `Username ${_usernameTaken} already taken! Choose another one!`}
             inputProps={{
               form: {
                 autocomplete: 'off',

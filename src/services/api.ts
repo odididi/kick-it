@@ -41,3 +41,6 @@ export const getStreamInfo = (): Promise<any> =>
 
 export const getActiveUsers = (): Promise<any> =>
   Axios.get(`https://${process.env.REACT_APP_API_URL}/users`)
+
+export const logoutUser = (username: string) =>
+  Axios.delete(`https://${process.env.REACT_APP_API_URL}/users/${username}`)

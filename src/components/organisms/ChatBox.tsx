@@ -64,6 +64,7 @@ interface ChatBoxProps {
 
 const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
   const chatBoxRef = React.useRef(document.createElement('div'));
+  const [initialized, setInitialized] = React.useState(false);
   const {username} = React.useContext(AuthContext);
   const groupedMessages = groupConsecutiveByProp(messages, "user");
   const recentMinuteTimestamp = React.useMemo(() => {
@@ -72,8 +73,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
   }, [messages])
   React.useEffect(() => {
     const lastMessage = messages[messages.length - 1];
-    if (lastMessage && lastMessage.user !== username) return;
-    chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    if (lastMessage &&
+      (lastMessage.user === username ||
+      lastMessage.user === 'KickIt-bot' && !initialized
+      )
+    ) {
+      setInitialized(true);
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    }
   }, [recentMinuteTimestamp])
   return (
     <ChatBoxContainer ref={chatBoxRef}>

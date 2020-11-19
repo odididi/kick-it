@@ -11,7 +11,6 @@ const ChatBoxContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  /* background: #333; */
   padding: 12px 0;
   max-height: ${window.innerHeight - 140 - 32 - 53}px;
   & > div:last-child {
@@ -30,6 +29,7 @@ const MessageContainer = styled.div`
   display: flex;
   margin-bottom: 12px;
   padding: 0 16px;
+  flex-shrink: 0;
 `;
 
 const Sender = styled(({...rest}) => (
@@ -47,6 +47,7 @@ const Sender = styled(({...rest}) => (
 
 const BotMessageContainer = styled.div`
   display: flex;
+  flex-shrink: 0;
   background: #DECF17;
   margin-bottom: 12px;
   padding: 0;

@@ -39,11 +39,7 @@ const Sender = styled(({...rest}) => (
     }}
     {...rest}
   />
-))`
-  &.root {
-    font-weight: bold;
-  }
-`;
+))`&.root { font-weight: bold; }`;
 
 const BotMessageContainer = styled.div`
   display: flex;
@@ -65,24 +61,38 @@ interface ChatBoxProps {
 
 const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
   const chatBoxRef = React.useRef(document.createElement('div'));
-  const [initialized, setInitialized] = React.useState(false);
+  const [initialize, setInitialize] = React.useState(true);
   const {username} = React.useContext(AuthContext);
   const groupedMessages = groupConsecutiveByProp(messages, "user");
   const recentMinuteTimestamp = React.useMemo(() => {
     const lastMessage = messages[messages.length - 1];
     return lastMessage?.timestamp;
   }, [messages])
+
   React.useEffect(() => {
     const lastMessage = messages[messages.length - 1];
-    if (lastMessage &&
-      (lastMessage.user === username ||
-      lastMessage.user === 'KickIt-bot' && !initialized
-      )
-    ) {
-      setInitialized(true);
+    const secondToLastMessage = messages[messages.length - 2];
+    const previousUser = secondToLastMessage && secondToLastMessage.user;
+    
+    // all the heights of chatBoxRef are calculated without taking into account the height of the last message,
+    // so we need to add it manually
+    // there is a different height when the lastMessage.user is different from before 
+    const lastMessageHeight = lastMessage && (lastMessage.user === config.BOT_NAME || lastMessage.user === previousUser) ? 10 : 43;
+    
+    // when scrollHeight equals sum: the chat is scrolled to the bottom
+    const sum = chatBoxRef.current.scrollTop + chatBoxRef.current.clientHeight + chatBoxRef.current.offsetTop + lastMessageHeight;
+    const scrollHeight = chatBoxRef.current.scrollHeight;
+
+    // the chat needs to scroll down for every new message when:
+    // 1. initialized
+    // 2. the chat is scrolled to the bottom
+    // 3. the user himself sends a message
+    if (initialize || scrollHeight-sum === 0 || (lastMessage && (lastMessage.user === username)) ){
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+      setInitialize(false);
     }
   }, [recentMinuteTimestamp])
+  
   return (
     <ChatBoxContainer ref={chatBoxRef}>
       {groupedMessages.map(msgGroup => {

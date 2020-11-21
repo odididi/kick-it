@@ -74,8 +74,8 @@ const Player: React.FC = () => {
   const playerRef = React.useRef(document.createElement('audio'));
   const [paused, setPaused] = React.useState<boolean>(true);
   React.useEffect(() => {
-    setPaused(false);
-    playerRef.current.play();
+    setPaused(true);
+    playerRef.current.pause();
   }, [])
   return (
     <PlayerContainer>

@@ -72,27 +72,36 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
 
   React.useEffect(() => {
     const lastMessage = messages[messages.length - 1];
-    const secondToLastMessage = messages[messages.length - 2];
-    const previousUser = secondToLastMessage && secondToLastMessage.user;
+    // const secondToLastMessage = messages[messages.length - 2];
+    // const previousUser = secondToLastMessage && secondToLastMessage.user;
     
-    // all the heights of chatBoxRef are calculated without taking into account the height of the last message,
+    // all chatBoxRef heights are calculated without taking into account the height of the last message,
     // so we need to add it manually
     // there is a different height when the lastMessage.user is different from before 
-    const lastMessageHeight = lastMessage && (lastMessage.user === config.BOT_NAME || lastMessage.user === previousUser) ? 10 : 43;
     
-    // when scrollHeight equals sum: the chat is scrolled to the bottom
+    // we have come to this... an approximate height of different messages
+    const lastMessageHeight = 40; //lastMessage && (lastMessage.user === config.BOT_NAME || lastMessage.user === previousUser) ? 30 : 43;
+    
+    // when scrollHeight is almost at the bottom(...) the chat is scrolled to the bottom
     const sum = chatBoxRef.current.scrollTop + chatBoxRef.current.clientHeight + chatBoxRef.current.offsetTop + lastMessageHeight;
     const scrollHeight = chatBoxRef.current.scrollHeight;
 
+    // console.log(`sum: ${sum}`)
+    // console.log(`scrollHeight: ${scrollHeight}`)
+    // console.log(`diff: ${scrollHeight-sum}`)
+
     // the chat needs to scroll down for every new message when:
     // 1. initialized
-    // 2. the chat is scrolled to the bottom
+    // 2. the chat is (almost) scrolled to the bottom
     // 3. the user himself sends a message
-    if (initialize || scrollHeight-sum === 0 || (lastMessage && (lastMessage.user === username)) ){
+    if (initialize || scrollHeight-sum < 100 || (lastMessage && (lastMessage.user === username)) ){
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    }
+
+    if (lastMessage && lastMessage.user === config.BOT_NAME) {
       setInitialize(false);
     }
-  }, [recentMinuteTimestamp, initialize, username, messages])
+  }, [recentMinuteTimestamp])
 
   const componentDecorator = (href: string, text: string, key: number) => (
     <a href={href} key={key} target="_blank" rel="noopener noreferrer">{text}</a>

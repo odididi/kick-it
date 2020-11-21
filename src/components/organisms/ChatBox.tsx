@@ -93,7 +93,11 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
       setInitialize(false);
     }
   }, [recentMinuteTimestamp])
-  
+
+  const componentDecorator = (href:string, text:string, key:number) => (
+    <a href={href} key={key} target="_blank" rel="noopener noreferrer">{text}</a>
+  );
+
   return (
     <ChatBoxContainer ref={chatBoxRef}>
       {groupedMessages.map(msgGroup => {
@@ -103,7 +107,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
             <BotMessage>
               {msgGroup.map(msg =>
                 <Typography variant="body2" style={{marginBottom: 8, marginTop: 8}} key={msg.timestamp}>
-                  <Linkify>{msg.content}</Linkify>
+                  <Linkify componentDecorator={componentDecorator}>{msg.content}</Linkify>
                 </Typography>
               )}
             </BotMessage>
@@ -119,7 +123,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
               </Sender>
               {msgGroup.map(msg =>
                 <Typography variant="body2" style={{marginBottom: 8}} key={msg.timestamp}>
-                  <Linkify>{msg.content}</Linkify>
+                  <Linkify componentDecorator={componentDecorator}>{msg.content}</Linkify>
                 </Typography>
               )}
             </div>

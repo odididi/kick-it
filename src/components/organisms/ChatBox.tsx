@@ -92,9 +92,9 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
       setInitialize(false);
     }
-  }, [recentMinuteTimestamp])
+  }, [recentMinuteTimestamp, initialize, username, messages])
 
-  const componentDecorator = (href:string, text:string, key:number) => (
+  const componentDecorator = (href: string, text: string, key: number) => (
     <a href={href} key={key} target="_blank" rel="noopener noreferrer">{text}</a>
   );
 

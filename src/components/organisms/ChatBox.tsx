@@ -6,6 +6,7 @@ import {groupConsecutiveByProp} from 'utils';
 import {ServerChatMessage} from 'kickit';
 import config from 'kickit-config.js';
 import {AuthContext} from 'services/auth';
+import Linkify from 'react-linkify';
 
 const ChatBoxContainer = styled.div`
   display: flex;
@@ -102,7 +103,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
             <BotMessage>
               {msgGroup.map(msg =>
                 <Typography variant="body2" style={{marginBottom: 8, marginTop: 8}} key={msg.timestamp}>
-                  {msg.content}
+                  <Linkify>{msg.content}</Linkify>
                 </Typography>
               )}
             </BotMessage>
@@ -118,7 +119,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({messages = []}) => {
               </Sender>
               {msgGroup.map(msg =>
                 <Typography variant="body2" style={{marginBottom: 8}} key={msg.timestamp}>
-                  {msg.content}
+                  <Linkify>{msg.content}</Linkify>
                 </Typography>
               )}
             </div>

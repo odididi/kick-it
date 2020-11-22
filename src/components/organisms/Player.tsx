@@ -95,7 +95,7 @@ const Player: React.FC = () => {
       </CurrentSongInfo>
       <audio
         ref={playerRef}
-        src='http://radio.kickit.gr/radio/8000/radio.mp3'
+        src='https://radio-admin.kickit.gr/radio/8000/radio.mp3'
       />
     </PlayerContainer>
   )

@@ -18,7 +18,7 @@ const ChatContainer = styled.div`
 
 const TopSectionContainer = styled.div`
   background: white;
-  height: 140px;
+  padding-top: 16px;
   display: flex;
   justify-content: center;
   @media(min-width: 960px) {

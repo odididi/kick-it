@@ -2,16 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 
 import PlayRoundedIcon from '@material-ui/icons/PlayArrowRounded';
-import PauseRoundedIcon from '@material-ui/icons/PauseRounded';
+import StopRoundedIcon from '@material-ui/icons/StopRounded';
+import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+import Slider from '@material-ui/core/Slider';
+import VolumeDown from '@material-ui/icons/VolumeDown';
+import VolumeUp from '@material-ui/icons/VolumeUp';
 import {palette} from 'styles/theme';
 import {Button, Typography} from '@material-ui/core';
 import {StreamContext} from 'services/stream';
+import {clamp} from 'ramda';
+import {usePrevious} from 'hooks';
+import {PersonRounded} from '@material-ui/icons';
 
 const PlayerContainer = styled.div`
   margin-bottom: 24px;
   display: flex;
   width: 100%;
 `;
+
+const Container = styled.div``;
 
 const PlayPauseButton = styled(({...rest}) => (
   <Button classes={{root: 'root'}} {...rest} />
@@ -52,7 +61,7 @@ const PlayIcon = styled(PlayRoundedIcon)`
   }
 `;
 
-const PauseIcon = styled(PauseRoundedIcon)`
+const StopIcon = styled(StopRoundedIcon)`
   color: ${palette.yellow};
   font-size: 44px !important;
   @media(min-width: 960px) {
@@ -63,41 +72,74 @@ const PauseIcon = styled(PauseRoundedIcon)`
   }
 `;
 
+const Volume = styled.div`
+  width: 222px;
+  display: flex;
+  margin-left: auto;
+  @media(min-width: 680px) {
+    width: 262px;
+  }
+  @media(min-width: 960px) {
+    width: 302px;
+  }
+`;
+
 const CurrentSongInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
+const streamURL = "https://radio-admin.kickit.gr/radio/8000/radio.mp3";
+
 const Player: React.FC = () => {
   const {currentSong: {songArtist, songTitle}} = React.useContext(StreamContext);
-  const playerRef = React.useRef(document.createElement('audio'));
+  const playerRef = React.useRef<HTMLAudioElement>(null);
   const [paused, setPaused] = React.useState<boolean>(true);
+  const [volume, setVolume] = React.useState<number>(100);
+  const prevVolume = usePrevious(volume) || 0;
   React.useEffect(() => {
-    setPaused(true);
-    playerRef.current.pause();
-  }, [])
+    if (playerRef.current) {
+      playerRef.current.volume = clamp(volume / 100, 1, 0)
+    }
+  }, [volume])
+  const LeftIcon = volume === 0 ? VolumeOffIcon : VolumeDown;
   return (
-    <PlayerContainer>
-      <PlayPauseButton
-        onClick={() => {
-          setPaused(!paused);
-          paused
-            ? playerRef.current.play()
-            : playerRef.current.pause()
-        }}
-      >
-        {paused ? <PlayIcon /> : <PauseIcon />}
-      </PlayPauseButton>
-      <CurrentSongInfo>
-        <Typography variant="h6" style={{fontWeight: 'bold'}}>{songTitle}</Typography>
-        <Typography variant="body1" >{songArtist}</Typography>
-      </CurrentSongInfo>
-      <audio
-        ref={playerRef}
-        src='https://radio-admin.kickit.gr/radio/8000/radio.mp3'
-      />
-    </PlayerContainer>
+    <Container>
+      <Volume>
+        <LeftIcon onClick={() => setVolume(volume ? 0 : prevVolume)} style={{cursor: 'pointer'}}/>
+        <Slider
+          value={volume}
+          style={{margin: '0 16px'}}
+          onChange={(event: any, newValue: number | number[]) => setVolume(newValue as number)}
+          aria-labelledby="continuous-slider"
+        />
+        <VolumeUp />
+      </Volume>
+      <PlayerContainer>
+        <PlayPauseButton
+          onClick={() => {
+            setPaused(!paused);
+            if (playerRef.current) {
+              if (paused) {
+                playerRef.current.src = streamURL;
+                playerRef.current.play();
+              } else {
+                playerRef.current.src = '';
+                playerRef.current.pause();
+              }
+            }
+          }}
+        >
+          {paused ? <PlayIcon /> : <StopIcon />}
+        </PlayPauseButton>
+        <CurrentSongInfo>
+          <Typography variant="h6" style={{fontWeight: 'bold'}}>{songTitle}</Typography>
+          <Typography variant="body1" >{songArtist}</Typography>
+        </CurrentSongInfo>
+        <audio ref={playerRef} />
+      </PlayerContainer>
+    </Container>
   )
 }
 export default Player;
